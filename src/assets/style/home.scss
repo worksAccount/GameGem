@@ -1,0 +1,218 @@
+@media screen and (max-width: 992px) {
+  .home-container {
+    .button-container {
+      a {
+        margin-right: 0 !important;
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
+
+.home-container {
+  padding: 0 16px;
+  color: #424242;
+
+  #main-content {
+    text-align: center;
+
+    .level1 {
+      margin-top: 80px;
+
+      a {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 5px;
+      }
+
+      .linkable {
+        margin-top: 30px;
+
+        a {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .level2 {
+      font-size: 50px;
+      font-weight: 700;
+      margin-top: 80px;
+
+      p {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 30.6px;
+        color: rgb(66, 66, 66);
+        direction: ltr;
+        text-align: center;
+        text-size-adjust: 100%;
+        vertical-align: baseline;
+        -webkit-font-smoothing: antialiased;
+        opacity: 0.8;
+      }
+    }
+
+    .level3 {
+      text-align: right;
+      padding-top: 80px;
+
+      .title {
+        font-size: 60px;
+        font-weight: 800;
+        margin-bottom: 20px;
+      }
+
+      .sub-title {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 30.6px;
+      }
+
+      p {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 30.6px;
+        opacity: 0.7;
+        margin: 0;
+      }
+
+      span {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 30.6px;
+        margin: 0;
+        opacity: 0.95;
+      }
+
+      .button-container {
+        margin-top: 40px;
+
+        div {
+          display: inline-block;
+          padding: 5px 16px;
+          color: #7359a4;
+          border: solid 2px #7359a4;
+          font-size: 16px;
+          font-weight: 500;
+          line-height: 27.2px;
+          border-radius: 20px;
+          cursor: pointer;
+
+          &:hover {
+            color: #fff !important;
+            background: #7359a5!important;
+            border-color: #402c56 !important;
+          }
+        }
+      }
+    }
+
+    .level4 {
+      margin-top: 80px;
+
+      .title {
+        font-size: 60px;
+        font-weight: 800;
+      }
+
+      .sub-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin-top: 10px;
+      }
+
+      .button-container {
+        margin-top: 50px;
+
+        a {
+          font-size: 24px;
+          font-weight: 400;
+          line-height: 40.8px;
+
+          color: #fff;
+          background-color: #7359a4;
+          width: 300px;
+          display: inline-block;
+
+          border: solid 3px #503f75;
+          border-radius: 40px;
+
+          padding: 7px 24px;
+
+          box-sizing: border-box;
+
+          &:nth-child(1),
+          &:nth-child(2) {
+            margin-right: 50px;
+          }
+
+          background-size: cover;
+          background-position: center left;
+          background-blend-mode: multiply;
+
+          transition: 0.5s;
+
+          &:hover {
+            background-size: auto;
+            background-position: 0 0;
+          }
+
+          &.iOS {
+            background-image: url(https://dev.adgem.com/wp-content/uploads/2019/06/apple_button_background2.png)!important;
+          }
+          &.Andorid {
+            background-image: url(https://dev.adgem.com/wp-content/uploads/2019/06/android5.png)!important;
+          }
+          &.Unity {
+            background-image: url(https://dev.adgem.com/wp-content/uploads/2019/06/unity3.png)!important;
+          }
+        }
+      }
+    }
+
+    .level-bottom {
+      margin-top: 80px;
+
+      p {
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 30.6px;
+        color: rgb(66, 66, 66);
+      }
+
+      a {
+        color: #7359a4;
+      }
+    }
+  }
+}
+
+.purple {
+  background-color: #7359a4;
+  color: #ffffff;
+  font-size: 30px !important;
+  font-weight: 300 !important;
+  letter-spacing: 1px;
+
+  &:hover {
+    border-color: #402c56;
+    background-color: #402c56;
+  }
+}
+
+.et_pb_button {
+  height: 50px;
+  padding: 8px 24px;
+  border-color: #7359a5;
+  border-radius: 50px;
+  text-shadow: none;
+  text-decoration: none;
+  display: inline-block;
+  line-height: 47px;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
