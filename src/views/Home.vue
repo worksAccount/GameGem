@@ -85,7 +85,7 @@
             </el-row>
 
             <el-row class="button-container">
-              <div>Sign Up</div>
+              <div @click="goSignUp">Sign Up</div>
             </el-row>
           </el-col>
 
@@ -159,7 +159,7 @@
             </el-row>
 
             <el-row class="button-container">
-              <div>Run Campaign</div>
+              <div @click="goRunCampaign">Run Campaign</div>
             </el-row>
           </el-col>
         </el-row>
@@ -254,7 +254,7 @@
           <strong>
             For more information about GameGem’s event schedule or to arrange a
             meeting, send us an email:&nbsp;
-            <a href="mailto:marketing@adgem.com">marketing@adgem.com</a>
+            <a href="mailto:todo your email">todo your email</a>
           </strong>
         </p>
       </el-row>
@@ -276,6 +276,14 @@ export default {
       this.$router.push({
         path: '/support'
       })
+    },
+    goSignUp: function () {
+      this.$router.push({
+        path: '/signUp'
+      })
+    },
+    goRunCampaign: function () {
+      // todo
     }
   }
 }
