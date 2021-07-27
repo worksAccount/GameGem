@@ -33,11 +33,22 @@
           <el-form-item label="Password" prop="pwd">
             <el-input v-model="form.pwd" type="password"></el-input>
           </el-form-item>
+
+          <el-form-item label="Confirm Password" prop="rePwd">
+            <el-input v-model="form.rePwd" type="password"></el-input>
+          </el-form-item>
         </el-form>
       </el-row>
 
       <el-row class="footer">
         <el-button type="primary" @click="clickHandler">Next</el-button>
+        <el-button
+          type="text"
+          style="float: right"
+          @click="$router.replace('/')"
+        >
+          go back home
+        </el-button>
       </el-row>
     </el-row>
   </el-row>
@@ -54,10 +65,19 @@ export default {
     TheLogo
   },
   data() {
+    const validation_password = (rule, value, callback) => {
+      if (value !== this.form.pwd) {
+        callback(new Error("Passwords don't match"))
+      } else {
+        callback()
+      }
+    }
+
     return {
       form: {
         mail: '',
-        pwd: ''
+        pwd: '',
+        rePwd: '' // 密码确认
       },
       rules: {
         mail: [
@@ -71,6 +91,16 @@ export default {
               'Use 10 or more characters with a mix of lowercase letters, uppercase letters, and numbers',
             trigger: 'blur'
           }
+        ],
+        rePwd: [
+          { required: true, message: 'password is required', trigger: 'blur' },
+          {
+            min: 10,
+            message:
+              'Use 10 or more characters with a mix of lowercase letters, uppercase letters, and numbers',
+            trigger: 'blur'
+          },
+          { validator: validation_password, trigger: blur }
         ]
       }
     }
@@ -94,7 +124,6 @@ export default {
         playerPassword: this.form.pwd
       }
       signUp(params).then(res => {
-        // alert(JSON.stringify(res))
         if (res && res.code === 200) {
           this.$notify({
             title: '',
@@ -105,7 +134,7 @@ export default {
           this.$router.replace({
             path: '/logIn'
           })
-        }else {
+        } else {
           this.$notify({
             title: '',
             message: res.message,
@@ -193,6 +222,10 @@ export default {
     &.el-button--primary {
       background-color: #7359a4;
       border-color: #7359a4;
+    }
+
+    &.el-button--text {
+      color: #7359a4;
     }
   }
 }
