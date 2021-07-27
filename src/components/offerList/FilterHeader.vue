@@ -70,11 +70,14 @@
       </template>
     </el-row>
 
-    <reward-dialog ref="rewardDialog" />
+    <reward-dialog ref="rewardDialog" @itemClick="itemClickHandler" />
+
     <device-dialog
       ref="deviceDialog"
       @change="function (val) { changeHandler('device', val) }"
     />
+
+    <detail-dialog ref="detailDialog" :item="offerItem" :isReward="true" />
   </el-row>
 </template>
 
@@ -86,6 +89,7 @@ import RewardDialog from '~components/offerList/RewardDialog'
 import DeviceDialog from '~components/offerList/DeviceDialog'
 import CategoryMenu from '~components/offerList/CategoryMenu'
 import SortMenu from '~components/offerList/SortMenu'
+import DetailDialog from '~components/offerList/DetailDialog'
 
 import TheFilterMenu from '~components/offerList/TheFilterMenu'
 
@@ -96,7 +100,8 @@ export default {
     DeviceDialog,
     CategoryMenu,
     SortMenu,
-    TheFilterMenu
+    TheFilterMenu,
+    DetailDialog
   },
   mixins: [ResizeHandlerMixin],
   data() {
@@ -158,7 +163,9 @@ export default {
         category: '', // category: 0-App 1-Survey 2-Trail
         deviceType: '', // device: 0-android 1-iphone 2-ipad
         estimateDays: '' // sort by: 0-Most Popular 1-High to Low 2-Level of Difficulty
-      }
+      },
+
+      offerItem: {}
     }
   },
   computed: {
@@ -222,6 +229,11 @@ export default {
       }
 
       this.$emit('search', this.searchParams)
+    },
+
+    itemClickHandler: function (item) {
+      this.offerItem = item
+      this.$refs['detailDialog'].init()
     }
   }
 }
