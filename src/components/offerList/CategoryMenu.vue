@@ -63,6 +63,14 @@ export default {
     }
   },
   methods: {
+    hide: function () {
+      this.visible = false
+    },
+
+    reset: function () {
+      this.radio = ''
+    },
+
     clickHandler: function () {
       this.visible = !this.visible
     },

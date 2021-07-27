@@ -79,6 +79,9 @@ export default {
     submitHandler: function () {
       this.visible = false
       this.$emit('change', this.deviceChosen)
+    },
+    reset: function () {
+      this.deviceChosen = ''
     }
   }
 }

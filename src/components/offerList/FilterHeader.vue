@@ -6,6 +6,7 @@
           <div v-if="item.position !== 'right'" :key="index" class="item">
             <template v-if="item.id === 2">
               <category-menu
+                ref="categoryMenu"
                 @change="function (val) { changeHandler('category', val) }"
               >
                 <span>
@@ -17,6 +18,7 @@
 
             <template v-else-if="item.id === 3">
               <sort-menu
+                ref="sortMenu"
                 @change="function (val) { changeHandler('sort', val) }"
               >
                 <span>
@@ -36,7 +38,11 @@
         </template>
       </template>
       <template v-else>
-        <the-filter-menu @change="changeHandler" @menuItemClick="clickHandler">
+        <the-filter-menu
+          ref="theFilterMenu"
+          @change="changeHandler"
+          @menuItemClick="clickHandler"
+        >
           <el-row class="mobile-menu">
             <div class="item">
               <i class="el-icon-s-operation" />
@@ -121,6 +127,12 @@ export default {
           icon: 'el-icon-d-caret'
         },
         {
+          id: 9,
+          title: 'Reset',
+          sort: '',
+          icon: 'el-icon-refresh-right'
+        },
+        {
           id: 4,
           title: '',
           sort: '',
@@ -170,6 +182,10 @@ export default {
         this.$emit('click', item)
       }
 
+      if (item.id === 9) {
+        this.changeHandler('reset')
+      }
+
       if (item.id === 0) {
         this.$refs['rewardDialog'].init()
       } else if (item.id === 1) {
@@ -183,10 +199,26 @@ export default {
 
       if (type === 'category') {
         this.searchParams.category = value
+        if (this.$refs['categoryMenu'].length)
+          this.$refs['categoryMenu'][0].hide()
       }
 
       if (type === 'sort') {
         this.searchParams.estimateDays = value
+        if (this.$refs['sortMenu'].length) this.$refs['sortMenu'][0].hide()
+      }
+
+      if (type === 'reset') {
+        this.searchParams = this.$options.data().searchParams
+
+        this.$refs['deviceDialog'].reset()
+
+        if (this.$refs['categoryMenu'].length)
+          this.$refs['categoryMenu'][0].reset()
+
+        if (this.$refs['sortMenu'].length) this.$refs['sortMenu'][0].reset()
+
+        if (this.$refs['theFilterMenu']) this.$refs['theFilterMenu'].reset()
       }
 
       this.$emit('search', this.searchParams)
