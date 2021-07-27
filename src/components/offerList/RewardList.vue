@@ -6,11 +6,11 @@
           <li :key="index" class="list-item">
             <el-card :body-style="{ padding: '10px' }">
               <el-row class="item-container">
-                <div class="icon-container">
+                <div class="icon-container" @click="goDetailPage(item)">
                   <img :src="item.icon" />
                 </div>
 
-                <div class="content-container">
+                <div class="content-container" @click="goDetailPage(item)">
                   <el-row class="name">{{ item.name }}</el-row>
 
                   <el-divider />
@@ -37,6 +37,11 @@ export default {
   props: {
     dataList: {
       type: Array
+    }
+  },
+  methods: {
+    goDetailPage: function (item) {
+      this.$emit('itemClick', item)
     }
   }
 }
@@ -68,6 +73,7 @@ export default {
           width: 125px;
           height: 125px;
           padding: 10px;
+          cursor: pointer;
 
           img {
             width: 100%;
@@ -78,6 +84,7 @@ export default {
         .content-container {
           flex: 1;
           min-width: 375px;
+          cursor: pointer;
         }
       }
     }

@@ -6,6 +6,7 @@
           <div v-if="item.position !== 'right'" :key="index" class="item">
             <template v-if="item.id === 2">
               <category-menu
+                ref="categoryMenu"
                 @change="function (val) { changeHandler('category', val) }"
               >
                 <span>
@@ -17,6 +18,7 @@
 
             <template v-else-if="item.id === 3">
               <sort-menu
+                ref="sortMenu"
                 @change="function (val) { changeHandler('sort', val) }"
               >
                 <span>
@@ -37,6 +39,7 @@
       </template>
       <template v-else>
         <the-filter-menu
+          ref="theFilterMenu"
           @change="changeHandler"
           @menuItemClick="clickHandler"
         >
@@ -49,13 +52,16 @@
       </template>
     </el-row>
 
-    <el-row class="right">
+    <el-row
+      class="right"
+      :style="{ width: device !== 'mobile' ? '220px' : '285px' }"
+    >
       <template v-for="(item, index) in list">
         <div
           v-if="item.position === 'right'"
           :key="index"
           class="item"
-          :style="{ padding: !item.title ? 0 : '0 20px' }"
+          :style="{ padding: !item.title ? '0 10px' : '0 20px 0 10px' }"
           @click="clickHandler(item)"
         >
           <i :class="item.icon" />
@@ -64,11 +70,14 @@
       </template>
     </el-row>
 
-    <reward-dialog ref="rewardDialog" />
+    <reward-dialog ref="rewardDialog" @itemClick="itemClickHandler" />
+
     <device-dialog
       ref="deviceDialog"
       @change="function (val) { changeHandler('device', val) }"
     />
+
+    <detail-dialog ref="detailDialog" :item="offerItem" :isReward="true" />
   </el-row>
 </template>
 
@@ -80,6 +89,7 @@ import RewardDialog from '~components/offerList/RewardDialog'
 import DeviceDialog from '~components/offerList/DeviceDialog'
 import CategoryMenu from '~components/offerList/CategoryMenu'
 import SortMenu from '~components/offerList/SortMenu'
+import DetailDialog from '~components/offerList/DetailDialog'
 
 import TheFilterMenu from '~components/offerList/TheFilterMenu'
 
@@ -90,7 +100,8 @@ export default {
     DeviceDialog,
     CategoryMenu,
     SortMenu,
-    TheFilterMenu
+    TheFilterMenu,
+    DetailDialog
   },
   mixins: [ResizeHandlerMixin],
   data() {
@@ -121,10 +132,23 @@ export default {
           icon: 'el-icon-d-caret'
         },
         {
+          id: 9,
+          title: 'Reset',
+          sort: '',
+          icon: 'el-icon-refresh-right'
+        },
+        {
           id: 4,
           title: '',
           sort: '',
           icon: 'el-icon-message-solid',
+          position: 'right'
+        },
+        {
+          id: 6,
+          title: '',
+          sort: '',
+          icon: 'el-icon-s-home',
           position: 'right'
         },
         {
@@ -139,7 +163,9 @@ export default {
         category: '', // category: 0-App 1-Survey 2-Trail
         deviceType: '', // device: 0-android 1-iphone 2-ipad
         estimateDays: '' // sort by: 0-Most Popular 1-High to Low 2-Level of Difficulty
-      }
+      },
+
+      offerItem: {}
     }
   },
   computed: {
@@ -153,8 +179,18 @@ export default {
         })
       }
 
+      if (item.id === 6) {
+        this.$router.push({
+          path: '/'
+        })
+      }
+
       if (item.id === 4) {
         this.$emit('click', item)
+      }
+
+      if (item.id === 9) {
+        this.changeHandler('reset')
       }
 
       if (item.id === 0) {
@@ -170,13 +206,34 @@ export default {
 
       if (type === 'category') {
         this.searchParams.category = value
+        if (this.$refs['categoryMenu'].length)
+          this.$refs['categoryMenu'][0].hide()
       }
 
       if (type === 'sort') {
         this.searchParams.estimateDays = value
+        if (this.$refs['sortMenu'].length) this.$refs['sortMenu'][0].hide()
+      }
+
+      if (type === 'reset') {
+        this.searchParams = this.$options.data().searchParams
+
+        this.$refs['deviceDialog'].reset()
+
+        if (this.$refs['categoryMenu'].length)
+          this.$refs['categoryMenu'][0].reset()
+
+        if (this.$refs['sortMenu'].length) this.$refs['sortMenu'][0].reset()
+
+        if (this.$refs['theFilterMenu']) this.$refs['theFilterMenu'].reset()
       }
 
       this.$emit('search', this.searchParams)
+    },
+
+    itemClickHandler: function (item) {
+      this.offerItem = item
+      this.$refs['detailDialog'].init()
     }
   }
 }
@@ -203,7 +260,6 @@ export default {
   }
 
   .right {
-    width: 160px;
   }
 
   .content,

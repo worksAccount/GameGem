@@ -18,7 +18,6 @@ export function logIn(data) {
 }
 
 export function signUp(data) {
-  // alert(JSON.stringify(data))
   return request({
     url: '/offerwall/api/ads/register',
     method: 'post',
@@ -27,7 +26,6 @@ export function signUp(data) {
 }
 
 export function addTask(data) {
-  alert(JSON.stringify(data))
   let url = '/offerwall/api/ads/addTask'
   const keys = Object.keys(data)
   if (keys.length) {

@@ -41,6 +41,13 @@
 
       <el-row class="footer">
         <el-button type="primary" @click="clickHandler">Sign In</el-button>
+        <el-button
+          type="text"
+          style="float: right"
+          @click="$router.replace('/')"
+        >
+          go back home
+        </el-button>
       </el-row>
     </el-row>
   </el-row>
@@ -199,6 +206,10 @@ export default {
     &.el-button--primary {
       background-color: #7359a4;
       border-color: #7359a4;
+    }
+
+    &.el-button--text {
+      color: #7359a4;
     }
   }
 }

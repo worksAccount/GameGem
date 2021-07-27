@@ -14,6 +14,7 @@
       <el-row class="menu-item" :key="index">
         <template v-if="item.id === 2">
           <category-menu
+            ref="categoryMenu"
             placement="right"
             @change="function (val) { changeHandler('category', val) }"
           >
@@ -23,6 +24,7 @@
 
         <template v-else-if="item.id === 3">
           <sort-menu
+            ref="sortMenu"
             placement="right"
             @change="function (val) { changeHandler('sort', val) }"
           >
@@ -67,6 +69,10 @@ export default {
           id: 3,
           title: 'Sort'
         },
+        {
+          id: 9,
+          title: 'Reset'
+        }
       ],
       checked: []
     }
@@ -77,12 +83,19 @@ export default {
     },
 
     changeHandler: function (type, value) {
+      this.$refs['categoryMenu'][0].hide()
+      this.$refs['sortMenu'][0].hide()
       this.$emit('change', type, value)
     },
 
     menuClickHandler: function (item) {
       this.visible = !this.visible
       this.$emit('menuItemClick', item)
+    },
+
+    reset: function () {
+      this.$refs['categoryMenu'][0].reset()
+      this.$refs['sortMenu'][0].reset()
     }
   }
 }
