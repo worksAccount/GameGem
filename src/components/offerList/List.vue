@@ -135,7 +135,6 @@ export default {
         playerId: window.sessionStorage.getItem('GameGemUID')
       }
       addTask(params).then(res => {
-        alert(JSON.stringify(res))
         if (res && res.code === 200) {
           this.$notify({
             title: '',

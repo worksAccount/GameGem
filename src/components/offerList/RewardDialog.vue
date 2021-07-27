@@ -50,7 +50,6 @@ export default {
         playerId: window.sessionStorage.getItem('GameGemUID')
       }
       getTask(params).then(res => {
-        console.info(res)
         if (res && res.code === 200) {
           // status=1 未完成；status=2 已完成
           const ls = res.result.records
