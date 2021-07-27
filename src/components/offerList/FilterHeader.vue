@@ -36,10 +36,7 @@
         </template>
       </template>
       <template v-else>
-        <the-filter-menu
-          @change="changeHandler"
-          @menuItemClick="clickHandler"
-        >
+        <the-filter-menu @change="changeHandler" @menuItemClick="clickHandler">
           <el-row class="mobile-menu">
             <div class="item">
               <i class="el-icon-s-operation" />
@@ -49,13 +46,16 @@
       </template>
     </el-row>
 
-    <el-row class="right">
+    <el-row
+      class="right"
+      :style="{ width: device !== 'mobile' ? '220px' : '285px' }"
+    >
       <template v-for="(item, index) in list">
         <div
           v-if="item.position === 'right'"
           :key="index"
           class="item"
-          :style="{ padding: !item.title ? 0 : '0 20px' }"
+          :style="{ padding: !item.title ? '0 10px' : '0 20px 0 10px' }"
           @click="clickHandler(item)"
         >
           <i :class="item.icon" />
@@ -128,6 +128,13 @@ export default {
           position: 'right'
         },
         {
+          id: 6,
+          title: '',
+          sort: '',
+          icon: 'el-icon-s-home',
+          position: 'right'
+        },
+        {
           id: 5,
           title: 'User Terms',
           sort: '',
@@ -150,6 +157,12 @@ export default {
       if (item.id === 5) {
         this.$router.push({
           path: '/support'
+        })
+      }
+
+      if (item.id === 6) {
+        this.$router.push({
+          path: '/'
         })
       }
 
@@ -203,7 +216,6 @@ export default {
   }
 
   .right {
-    width: 160px;
   }
 
   .content,
