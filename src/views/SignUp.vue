@@ -81,7 +81,12 @@ export default {
       },
       rules: {
         mail: [
-          { required: true, message: 'Email is required', trigger: 'blur' }
+          { required: true, message: 'Email is required', trigger: 'blur' },
+          {
+            type: 'email',
+            message: 'Please enter a valid email',
+            trigger: ['blur', 'change']
+          }
         ],
         pwd: [
           { required: true, message: 'password is required', trigger: 'blur' },

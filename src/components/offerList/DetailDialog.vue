@@ -9,21 +9,32 @@
   >
     <el-row class="content">
       <el-row class="icon-container">
-        <img :src="item.icon" />
+        <div class="img-container">
+          <img :src="item.icon" />
+        </div>
+
+        <div class="img-description">
+          A quick, easy, and thrilling way to earn!
+        </div>
       </el-row>
 
       <el-row class="content-container">
-        <el-row class="description">{{ item.des }}</el-row>
+        <el-row class="title">Instructions/Guidelines:</el-row>
+        <el-row class="sub-title">
+          Pro Tip: Reach your goal faster by purchasing the xxx$ coin package!
+        </el-row>
+        <el-row
+          class="description"
+          v-html="getDescriptionHtml(item.des)"
+        ></el-row>
       </el-row>
 
       <div class="button-container" v-if="!isReward">
-        <el-button
-          type="success"
-          icon="el-icon-coin"
-          round
-          @click="addTask(item)"
-        >
-          {{ item.goal }}
+        <el-button type="success" round @click="addTask(item)">
+          <span style="padding-right: 8px">Continue To Earn</span>
+          <i class="el-icon-coin" />
+          <span>+{{ item.goal }}</span>
+          <span style="padding-left: 8px">Robux</span>
         </el-button>
       </div>
     </el-row>
@@ -75,6 +86,14 @@ export default {
           })
         }
       })
+    },
+
+    getDescriptionHtml: function (str) {
+      let res = ''
+      if (str) {
+        res = str.replace(/\n/g, '<br/>')
+      }
+      return res
     }
   }
 }
@@ -83,6 +102,12 @@ export default {
 <style lang="scss" scoped>
 .detail-dialog {
   ::v-deep {
+    .el-dialog__header {
+      padding: 20px;
+      color: #fff;
+      background: #e1e1e1;
+    }
+
     .el-dialog__body {
       padding: 10px;
       width: 100%;
@@ -96,13 +121,21 @@ export default {
   }
 
   .icon-container {
-    width: 200px;
-    height: 200px;
-    margin: auto;
+    display: flex;
 
-    img {
-      width: 100%;
-      height: 100%;
+    .img-container {
+      width: 150px;
+      height: 150px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .img-description {
+      padding-left: 10px;
+      flex: 1;
     }
   }
 
@@ -110,10 +143,25 @@ export default {
     width: 100%;
     margin-top: 10px;
     margin-bottom: 10px;
+
+    .title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .sub-title {
+      margin-bottom: 10px;
+    }
+
+    .description {
+      padding: 10px;
+      background: #f2f2f2;
+      border-radius: 5px;
+    }
   }
 
   .button-container {
-    width: 125px;
+    /*width: 125px;*/
     padding: 10px;
     margin: auto;
 
