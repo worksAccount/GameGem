@@ -40,7 +40,9 @@
       </el-row>
 
       <el-row class="footer">
-        <el-button type="primary" @click="clickHandler">Sign In</el-button>
+        <el-button type="primary" v-loading="loading" @click="clickHandler">
+          Sign In
+        </el-button>
         <el-button
           type="text"
           style="float: right"
@@ -65,6 +67,8 @@ export default {
   },
   data() {
     return {
+      loading: false,
+
       form: {
         mail: '',
         pwd: ''
@@ -102,7 +106,9 @@ export default {
         playerName: this.form.mail,
         playerPassword: this.form.pwd
       }
+      this.loading = true
       logIn(params).then(res => {
+        this.loading = false
         if (res && res.code === 200) {
           this.$notify({
             title: '',
