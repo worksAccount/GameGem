@@ -18,7 +18,11 @@
 
                 <el-divider />
 
-                <el-row class="description">{{ item.des }}</el-row>
+                <el-row
+                  class="description"
+                  v-html="getDescriptionHtml(item.des)"
+                >
+                </el-row>
               </div>
 
               <div class="button-container">
@@ -94,6 +98,14 @@ export default {
       this.params.pageNo = 1
 
       this.getList('init')
+    },
+
+    getDescriptionHtml: function (str) {
+      let res = ''
+      if (str) {
+        res = str.replace(/\n/g, '<br/>')
+      }
+      return res
     },
 
     doSearch: function (params) {

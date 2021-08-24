@@ -91,9 +91,7 @@
 
           <el-col :md="12" :sm="24" :xs="24">
             <el-row style="text-align: center; padding: 40px 0">
-              <img
-                src="https://dev.adgem.com/wp-content/uploads/2019/10/AdGems-Publisher7_optimized.png"
-              />
+              <img :src="img_AdGems_Publisher7_optimized" />
             </el-row>
           </el-col>
         </el-row>
@@ -104,9 +102,7 @@
         <el-row>
           <el-col :md="8" :sm="24" :xs="24">
             <el-row style="text-align: center; padding: 40px 0">
-              <img
-                src="https://dev.adgem.com/wp-content/uploads/2019/10/Advertiser_optimized.gif"
-              />
+              <img :src="img_Advertiser_optimized" />
             </el-row>
           </el-col>
 
@@ -207,9 +203,7 @@
 
           <el-col :md="8" :sm="24" :xs="24">
             <el-row style="text-align: center; padding: 40px 0">
-              <img
-                src="https://dev.adgem.com/wp-content/uploads/2019/10/OfferWallProcess_optimized2.gif"
-              />
+              <img :src="img_OfferWallProcess_optimized2" />
             </el-row>
           </el-col>
         </el-row>
@@ -227,6 +221,7 @@
             class="iOS"
             href="https://docs.adgem.com/publisher-support/ios-sdk-integration-guide/"
             target="_blank"
+            :style="{ backgroundImage: 'url(' + img_button_ios + ')' }"
           >
             iOS
           </a>
@@ -235,6 +230,7 @@
             class="Andorid"
             href="https://docs.adgem.com/publisher-support/android-sdk-integration-guide/"
             target="_blank"
+            :style="{ backgroundImage: 'url(' + img_button_android + ')' }"
           >
             Android
           </a>
@@ -243,6 +239,7 @@
             class="Unity"
             href="https://docs.adgem.com/publisher-support/unity-integration-guide/"
             target="_blank"
+            :style="{ backgroundImage: 'url(' + img_button_unity + ')' }"
           >
             Unity
           </a>
@@ -266,6 +263,16 @@
 export default {
   name: 'Home',
   components: {},
+  data() {
+    return {
+      img_AdGems_Publisher7_optimized: require('@/assets/images/index/AdGems-Publisher7_optimized.png'),
+      img_Advertiser_optimized: require('@/assets/images/index/Advertiser_optimized.gif'),
+      img_OfferWallProcess_optimized2: require('@/assets/images/index/OfferWallProcess_optimized2.gif'),
+      img_button_ios: require('@/assets/images/index/apple_button_background2.png'),
+      img_button_android: require('@/assets/images/index/android5.png'),
+      img_button_unity: require('@/assets/images/index/unity3.png')
+    }
+  },
   methods: {
     clickHandler: function (id) {
       document.getElementById(id).scrollIntoView({

@@ -72,6 +72,12 @@ export default {
 <style lang="scss" scoped>
 .reward-dialog {
   ::v-deep {
+    .el-dialog__header {
+      padding: 20px;
+      color: #fff;
+      background: #e1e1e1;
+    }
+
     .el-dialog__body {
       padding: 0;
     }
