@@ -8,15 +8,17 @@
   >
     <el-row class="content">
       <el-row class="description-container">
-        Do you own any of these mobile devices?
-        Select the device you own to see their exclusive offers.
+        Do you own any of these mobile devices? Select the device you own to see
+        their exclusive offers.
       </el-row>
 
       <el-row class="card-container" :gutter="16">
         <el-col :md="8" :sm="24" :xs="24">
           <el-card shadow="hover">
             <div class="content-container" @click="clickHandler('0')">
-              <el-row>todo pic1</el-row>
+              <el-row>
+                <img class="image" :src="imgAndroid" />
+              </el-row>
               <el-row>Android</el-row>
             </div>
 
@@ -29,7 +31,9 @@
         <el-col :md="8" :sm="24" :xs="24">
           <el-card shadow="hover">
             <div class="content-container" @click="clickHandler('1')">
-              <el-row>todo pic2</el-row>
+              <el-row>
+                <img class="image" :src="imgIphone" />
+              </el-row>
               <el-row>iPhone</el-row>
             </div>
 
@@ -42,7 +46,9 @@
         <el-col :md="8" :sm="24" :xs="24">
           <el-card shadow="hover">
             <div class="content-container" @click="clickHandler('2')">
-              <el-row>todo pic3</el-row>
+              <el-row>
+                <img class="image" :src="imgIpad" />
+              </el-row>
               <el-row>iPad</el-row>
             </div>
 
@@ -66,6 +72,11 @@ export default {
   data() {
     return {
       visible: false,
+
+      imgIphone: require('~assets/images/components/iphone.png'),
+      imgIpad: require('~assets/images/components/ipad.png'),
+      imgAndroid: require('~assets/images/components/android.png'),
+
       deviceChosen: '' // 0-android 1-iphone 2-ipad
     }
   },
@@ -100,6 +111,11 @@ export default {
 
     .content-container {
       cursor: pointer;
+
+      .image {
+        width: auto;
+        height: 125px;
+      }
     }
 
     .icon-container {
