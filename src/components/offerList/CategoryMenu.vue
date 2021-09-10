@@ -1,6 +1,6 @@
 <template>
   <el-popover
-    v-model="visible"
+    :value="visible"
     :placement="placement"
     title=""
     width="200"
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'CategoryMenu',
   props: {
@@ -42,7 +44,7 @@ export default {
   },
   data() {
     return {
-      visible: false,
+      // visible: false,
       menuList: [
         // 0-App 1-Survey 2-Trail
         {
@@ -62,9 +64,17 @@ export default {
       radio: ''
     }
   },
+  computed: {
+    // ...mapGetters(['visibility_category'])
+    ...mapGetters({
+      visible: 'visibility_category',
+      visible_sort: 'visibility_sort'
+    })
+  },
   methods: {
     hide: function () {
-      this.visible = false
+      // this.visible = false
+      this.$store.commit('filter/TRIGGER_CATEGORY', false)
     },
 
     reset: function () {
@@ -72,7 +82,10 @@ export default {
     },
 
     clickHandler: function () {
-      this.visible = !this.visible
+      // this.visible = !this.visible
+      this.$store.commit('filter/TRIGGER_CATEGORY')
+
+      if (this.visible_sort) this.$store.commit('filter/TRIGGER_SORT')
     },
 
     changeHandler: function (val) {
