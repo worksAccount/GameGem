@@ -1,5 +1,8 @@
 <template>
-  <div class="logo" @click="goIndex">LOGO GameGem</div>
+  <div class="logo" @click="goIndex">
+    <div class="image"><img :src="imgLogo" /></div>
+    <div>GameGem</div>
+  </div>
 </template>
 
 <script>
@@ -9,6 +12,11 @@ export default {
     allowClick: {
       type: Boolean,
       default: true
+    }
+  },
+  data() {
+    return {
+      imgLogo: require('@/assets/logo.png')
     }
   },
   methods: {
@@ -30,5 +38,19 @@ export default {
   line-height: 60px;
   padding: 0 30px;
   cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .image {
+    margin-right: 10px;
+    display: flex;
+
+    img {
+      width: 55px;
+      height: 55px;
+    }
+  }
 }
 </style>
