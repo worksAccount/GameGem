@@ -36,6 +36,15 @@ const routes = [
         meta: {
           title: 'contact'
         }
+      },
+
+      {
+        path: '/userCenter',
+        name: 'UserCenter',
+        component: () => import('@/views/UserCenter'),
+        meta: {
+          title: 'userCenter'
+        }
       }
     ]
   },
@@ -49,6 +58,11 @@ const routes = [
     path: '/logIn',
     name: 'LogIn',
     component: () => import('@/views/LogIn')
+  },
+  {
+    path: '/runCampaign',
+    name: 'RunCampaign',
+    component: () => import('@/views/RunCampaign')
   },
   {
     path: '/support',

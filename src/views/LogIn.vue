@@ -52,18 +52,22 @@
         </el-button>
       </el-row>
     </el-row>
+
+    <forgot-password-dialog ref="forgotPasswordDialog" />
   </el-row>
 </template>
 
 <script>
 import TheLogo from '~views/layout/components/TheLogo'
+import ForgotPasswordDialog from '~components/base/ForgotPasswordDialog'
 
 import { logIn } from '@/api'
 
 export default {
   name: 'LogIn',
   components: {
-    TheLogo
+    TheLogo,
+    ForgotPasswordDialog
   },
   data() {
     return {
@@ -95,11 +99,7 @@ export default {
       })
     },
     goFindPassword: function () {
-      this.$notify({
-        title: '',
-        message: 'todo forgot password',
-        type: 'warning'
-      })
+      this.$refs['forgotPasswordDialog'].show()
     },
     doLogIn: function () {
       const params = {

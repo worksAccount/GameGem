@@ -290,7 +290,9 @@ export default {
       })
     },
     goRunCampaign: function () {
-      // todo
+      this.$router.push({
+        path: '/runCampaign'
+      })
     }
   }
 }

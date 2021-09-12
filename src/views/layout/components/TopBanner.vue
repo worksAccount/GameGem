@@ -5,8 +5,16 @@
     </span>
 
     <section class="right" v-if="device !== 'mobile'">
+      <!-- todo 已登录 不展示 sign up 和 log in -->
       <span @click="clickHandler(0)">Sign Up</span>
       <span @click="clickHandler(1)">Log In</span>
+      <span
+        v-if="$route.path !== '/userCenter'"
+        class="user-center"
+        @click="clickHandler(2)"
+      >
+        <i class="el-icon-user-solid" />
+      </span>
     </section>
   </el-row>
 </template>
@@ -28,8 +36,10 @@ export default {
       let path = ''
       if (type === 0) {
         path = '/signUp'
-      } else {
+      } else if (type === 1) {
         path = 'logIn'
+      } else if (type === 2) {
+        path = '/userCenter'
       }
       this.$router.push({
         path: path
@@ -65,6 +75,10 @@ export default {
       &:nth-child(1) {
         margin-right: 15px;
       }
+    }
+
+    .user-center {
+      margin-left: 15px;
     }
   }
 }

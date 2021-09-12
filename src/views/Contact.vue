@@ -9,9 +9,7 @@
             <span>
               I have completed an offer, but I did not receive my rewards
             </span>
-            <div class="bold" @click="clickHandler">
-              What do I do?
-            </div>
+            <div class="bold" @click="clickHandler">What do I do?</div>
           </el-card>
         </el-col>
 
@@ -40,10 +38,7 @@
         <el-form ref="form" :model="form" :rules="rule" label-position="top">
           <el-form-item label="What does inquiry relate to?" prop="inquiry">
             <el-select v-model="form.inquiry" placeholder="">
-              <el-option
-                label="Missing Rewards"
-                value="Missing Rewards"
-              />
+              <el-option label="Missing Rewards" value="Missing Rewards" />
               <el-option
                 label="Interested in Advertising"
                 value="Interested in Advertising"
@@ -56,10 +51,7 @@
                 label="I am a current Publisher and need support"
                 value="I am a current Publisher and need support"
               />
-              <el-option
-                label="Other"
-                value="Other"
-              />
+              <el-option label="Other" value="Other" />
             </el-select>
           </el-form-item>
 
@@ -121,18 +113,10 @@ export default {
         inquiry: [
           { required: true, message: 'please select', trigger: 'blur' }
         ],
-        fName: [
-          { required: true, message: 'please type in', trigger: 'blur' }
-        ],
-        lName: [
-          { required: true, message: 'please type in', trigger: 'blur' }
-        ],
-        type: [
-          { required: true, message: 'please type in', trigger: 'blur' }
-        ],
-        email: [
-          { required: true, message: 'please type in', trigger: 'blur' }
-        ],
+        fName: [{ required: true, message: 'please type in', trigger: 'blur' }],
+        lName: [{ required: true, message: 'please type in', trigger: 'blur' }],
+        type: [{ required: true, message: 'please type in', trigger: 'blur' }],
+        email: [{ required: true, message: 'please type in', trigger: 'blur' }],
         message: [
           { required: true, message: 'please type in', trigger: 'blur' }
         ]

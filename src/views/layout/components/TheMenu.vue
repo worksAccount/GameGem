@@ -11,7 +11,7 @@
     </span>
 
     <template v-for="(item, index) in menuList">
-      <el-row class="menu-item" :key="index">
+      <el-row v-show="showFilter(item)" class="menu-item" :key="index">
         <div @click="menuClickHandler(item)">{{ item.name }}</div>
       </el-row>
     </template>
@@ -39,6 +39,17 @@ export default {
     menuClickHandler: function (item) {
       this.visible = !this.visible
       this.$emit('menuItemClick', item)
+    },
+
+    showFilter: function (item) {
+      let res = true
+      if (item.name === 'User Center' && this.$route.path === '/userCenter') {
+        res = false
+      }
+
+      // todo 已登录 不展示 sign up 和 log in
+
+      return res
     }
   }
 }

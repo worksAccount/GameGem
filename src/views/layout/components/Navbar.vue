@@ -108,6 +108,12 @@ export default {
         id: '6',
         type: '0', // 0 内部页面 5 锚点 9 外部链接
         path: ''
+      },
+      {
+        name: 'User Center',
+        id: '7',
+        type: '0', // 0 内部页面 5 锚点 9 外部链接
+        path: ''
       }
     ]
   },
@@ -166,7 +172,6 @@ export default {
     goIndex: function () {
       console.info('go index')
     },
-
     menuItemClickHandler: function (item) {
       if (item.id === '1') {
         if (this.$route.path !== '/index') {
@@ -210,6 +215,8 @@ export default {
           path = '/signUp'
         } else if (item.id === '6') {
           path = '/logIn'
+        } else if (item.id === '7') {
+          path = '/userCenter'
         }
         this.$router.push({
           path: path
