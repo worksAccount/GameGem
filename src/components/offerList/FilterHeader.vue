@@ -193,10 +193,15 @@ export default {
         this.changeHandler('reset')
       }
 
-      if (item.id === 0) {
-        this.$refs['rewardDialog'].init()
-      } else if (item.id === 1) {
-        this.$refs['deviceDialog'].init()
+      if (item.id === 0 || item.id === 1) {
+        this.$store.commit('filter/TRIGGER_CATEGORY', false)
+        this.$store.commit('filter/TRIGGER_SORT', false)
+
+        if (item.id === 0) {
+          this.$refs['rewardDialog'].init()
+        } else if (item.id === 1) {
+          this.$refs['deviceDialog'].init()
+        }
       }
     },
     changeHandler: function (type, value) {
@@ -206,26 +211,27 @@ export default {
 
       if (type === 'category') {
         this.searchParams.category = value
-        if (this.$refs['categoryMenu'].length)
-          this.$refs['categoryMenu'][0].hide()
+        this.$store.commit('filter/TRIGGER_CATEGORY')
       }
 
       if (type === 'sort') {
         this.searchParams.estimateDays = value
-        if (this.$refs['sortMenu'].length) this.$refs['sortMenu'][0].hide()
+        this.$store.commit('filter/TRIGGER_SORT')
       }
 
       if (type === 'reset') {
         this.searchParams = this.$options.data().searchParams
 
-        this.$refs['deviceDialog'].reset()
+        this.$store.commit('filter/TRIGGER_CATEGORY', false)
+        this.$store.commit('filter/TRIGGER_SORT', false)
 
-        if (this.$refs['categoryMenu'].length)
-          this.$refs['categoryMenu'][0].reset()
+        if (this.$refs['deviceDialog']) {
+          this.$refs['deviceDialog'].reset()
+        }
 
-        if (this.$refs['sortMenu'].length) this.$refs['sortMenu'][0].reset()
-
-        if (this.$refs['theFilterMenu']) this.$refs['theFilterMenu'].reset()
+        if (this.$refs['theFilterMenu']) {
+          this.$refs['theFilterMenu'].reset()
+        }
       }
 
       this.$emit('search', this.searchParams)

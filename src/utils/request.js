@@ -1,5 +1,6 @@
 import axios from 'axios'
 import router from '@/router'
+import store from '@/store'
 
 // create an axios instance
 const service = axios.create({
@@ -49,6 +50,10 @@ service.interceptors.response.use(
       return res
     } else if (res.code === 400) {
       // msg: "用户未登录，请登录后重新访问！!"
+
+      store.commit('user/CLEAN_UID')
+      store.commit('user/CLEAN_UNAME')
+
       router.replace({
         path: '/logIn'
       })
@@ -59,6 +64,9 @@ service.interceptors.response.use(
   },
   error => {
     console.log('err' + error) // for debug
+
+    store.commit('user/CLEAN_UID')
+    store.commit('user/CLEAN_UNAME')
 
     router.replace({
       path: '/logIn'

@@ -1,8 +1,10 @@
 <template>
   <el-row class="home-container">
+    <!--
     <el-row style="margin: 20px 0; font-size: 50px; text-align: center">
       todo swiper
     </el-row>
+    -->
 
     <el-row id="main-content">
       <el-row class="level1">
@@ -290,7 +292,9 @@ export default {
       })
     },
     goRunCampaign: function () {
-      // todo
+      this.$router.push({
+        path: '/runCampaign'
+      })
     }
   }
 }

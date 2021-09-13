@@ -1,6 +1,6 @@
 <template>
   <el-popover
-    v-model="visible"
+    :value="visible"
     :placement="placement"
     title=""
     width="200"
@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'SortMenu',
   props: {
@@ -31,7 +33,7 @@ export default {
   },
   data() {
     return {
-      visible: false,
+      // visible: false,
       menuList: [
         // sort by: 0-Most Popular 1-High to Low 2-Level of Difficulty
         {
@@ -50,9 +52,17 @@ export default {
       radio: ''
     }
   },
+  computed: {
+    // ...mapGetters(['visibility_sort'])
+    ...mapGetters({
+      visible: 'visibility_sort',
+      visible_category: 'visibility_category'
+    })
+  },
   methods: {
     hide: function () {
-      this.visible = false
+      // this.visible = false
+      this.$store.commit('filter/TRIGGER_SORT', false)
     },
 
     reset: function () {
@@ -60,7 +70,10 @@ export default {
     },
 
     clickHandler: function () {
-      this.visible = !this.visible
+      // this.visible = !this.visible
+      this.$store.commit('filter/TRIGGER_SORT')
+
+      if (this.visible_category) this.$store.commit('filter/TRIGGER_CATEGORY')
     },
 
     changeHandler: function (val) {

@@ -83,13 +83,23 @@ export default {
     },
 
     changeHandler: function (type, value) {
-      this.$refs['categoryMenu'][0].hide()
-      this.$refs['sortMenu'][0].hide()
+      if (type === 'category') {
+        this.$store.commit('filter/TRIGGER_CATEGORY')
+      }
+
+      if (type === 'sort') {
+        this.$store.commit('filter/TRIGGER_SORT')
+      }
+
       this.$emit('change', type, value)
     },
 
     menuClickHandler: function (item) {
       this.visible = !this.visible
+
+      this.$store.commit('filter/TRIGGER_CATEGORY', false)
+      this.$store.commit('filter/TRIGGER_SORT', false)
+
       this.$emit('menuItemClick', item)
     },
 

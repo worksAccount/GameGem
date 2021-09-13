@@ -11,7 +11,7 @@
     </span>
 
     <template v-for="(item, index) in menuList">
-      <el-row class="menu-item" :key="index">
+      <el-row v-show="showFilter(item)" class="menu-item" :key="index">
         <div @click="menuClickHandler(item)">{{ item.name }}</div>
       </el-row>
     </template>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'TheMenu',
   props: {
@@ -31,6 +33,9 @@ export default {
       visible: false
     }
   },
+  computed: {
+    ...mapGetters(['u_id', 'u_name'])
+  },
   methods: {
     clickHandler: function () {
       this.visible = !this.visible
@@ -39,6 +44,33 @@ export default {
     menuClickHandler: function (item) {
       this.visible = !this.visible
       this.$emit('menuItemClick', item)
+    },
+
+    showFilter: function (item) {
+      let res = true
+      if (item.name === 'Sign Up' || item.name === 'Log In') {
+        if (this.u_id) res = false
+      }
+
+      if (item.name === 'User Center') {
+        if (this.$route.path === '/userCenter') {
+          // 用户中心页 不展示 用户中心页导航
+          res = false
+        }
+
+        if (!this.u_id) res = false
+      }
+
+      if (item.name === 'Home') {
+        if (this.$route.path === '/index') {
+          // 首页 不展示 首页导航
+          res = false
+
+          if (!this.u_id) res = false
+        }
+      }
+
+      return res
     }
   }
 }

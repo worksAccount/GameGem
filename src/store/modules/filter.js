@@ -4,11 +4,19 @@ const state = {
 }
 
 const mutations = {
-  TRIGGER_CATEGORY: function (state) {
-    state.visibility_category = !state.visibility_category
+  TRIGGER_CATEGORY: function (state, value) {
+    if (value !== undefined) {
+      state.visibility_category = value
+    } else {
+      state.visibility_category = !state.visibility_category
+    }
   },
-  TRIGGER_SORT: function (state) {
-    state.visibility_sort = !state.visibility_sort
+  TRIGGER_SORT: function (state, value) {
+    if (value !== undefined) {
+      state.visibility_sort = value
+    } else {
+      state.visibility_sort = !state.visibility_sort
+    }
   }
 }
 
