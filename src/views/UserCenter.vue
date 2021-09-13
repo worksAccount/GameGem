@@ -5,30 +5,16 @@
     </el-row>
 
     <el-row class="content">
-      <el-row>
-        todo Your name
-      </el-row>
+      <el-row> E-mail: {{ uName }} </el-row>
 
       <el-row>
-        todo Your E-mail
-      </el-row>
-
-      <el-row>
-        <el-button
-          type="text"
-          @click="clickHandler(1)"
-        >
+        <el-button type="text" @click="clickHandler(1)">
           Change password
         </el-button>
       </el-row>
 
       <el-row>
-        <el-button
-          type="text"
-          @click="clickHandler(2)"
-        >
-          Log out
-        </el-button>
+        <el-button type="text" @click="clickHandler(2)"> Log out </el-button>
       </el-row>
     </el-row>
 
@@ -45,14 +31,20 @@ export default {
     ChangePasswordDialog
   },
   data() {
-    return {}
+    return {
+      uName: ''
+    }
+  },
+  mounted() {
+    this.uName = sessionStorage.getItem('GameGemUName')
   },
   methods: {
     clickHandler: function (type) {
       if (type === 1) {
         this.$refs['changePasswordDialog'].show()
       } else if (type === 2) {
-        // todo clean user data
+        this.$store.commit('user/CLEAN_UID')
+        this.$store.commit('user/CLEAN_UNAME')
 
         this.$router.replace({
           path: '/'
@@ -77,7 +69,7 @@ export default {
   }
 
   .content {
-    margin-top: 80px;
+    margin-top: 40px;
     text-align: center;
     font-size: 18px;
     font-weight: normal;

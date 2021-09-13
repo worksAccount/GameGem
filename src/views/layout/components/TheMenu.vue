@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'TheMenu',
   props: {
@@ -30,6 +32,9 @@ export default {
     return {
       visible: false
     }
+  },
+  computed: {
+    ...mapGetters(['u_id', 'u_name'])
   },
   methods: {
     clickHandler: function () {
@@ -43,11 +48,27 @@ export default {
 
     showFilter: function (item) {
       let res = true
-      if (item.name === 'User Center' && this.$route.path === '/userCenter') {
-        res = false
+      if (item.name === 'Sign Up' || item.name === 'Log In') {
+        if (this.u_id) res = false
       }
 
-      // todo 已登录 不展示 sign up 和 log in
+      if (item.name === 'User Center') {
+        if (this.$route.path === '/userCenter') {
+          // 用户中心页 不展示 用户中心页导航
+          res = false
+        }
+
+        if (!this.u_id) res = false
+      }
+
+      if (item.name === 'Home') {
+        if (this.$route.path === '/index') {
+          // 首页 不展示 首页导航
+          res = false
+
+          if (!this.u_id) res = false
+        }
+      }
 
       return res
     }

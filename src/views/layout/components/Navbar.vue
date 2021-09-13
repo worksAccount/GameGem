@@ -114,6 +114,12 @@ export default {
         id: '7',
         type: '0', // 0 内部页面 5 锚点 9 外部链接
         path: ''
+      },
+      {
+        name: 'Home',
+        id: '9',
+        type: '0', // 0 内部页面 5 锚点 9 外部链接
+        path: ''
       }
     ]
   },
@@ -217,10 +223,19 @@ export default {
           path = '/logIn'
         } else if (item.id === '7') {
           path = '/userCenter'
+        } else if (item.id === '9') {
+          path = '/'
         }
-        this.$router.push({
-          path: path
-        })
+
+        if (item.id !== '9') {
+          this.$router.push({
+            path: path
+          })
+        } else {
+          this.$router.replace({
+            path: path
+          })
+        }
       }
     }
   }

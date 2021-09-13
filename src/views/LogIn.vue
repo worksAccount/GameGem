@@ -118,7 +118,10 @@ export default {
 
           const loginObj = res.result
           const userId = loginObj.id
-          window.sessionStorage.setItem('GameGemUID', userId)
+          const userName = loginObj.playerName
+
+          this.$store.commit('user/SET_UID', userId)
+          this.$store.commit('user/SET_UNAME', userName)
 
           this.$router.replace({
             path: '/offerList'

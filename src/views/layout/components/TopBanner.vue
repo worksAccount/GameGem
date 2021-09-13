@@ -1,20 +1,27 @@
 <template>
-  <el-row class="top-banner-container">
+  <el-row class="top-banner-container" v-show="isLogin()">
     <span class="left">
       Schedule Some Time to Meet the {{ projectName }} Team!
     </span>
 
     <section class="right" v-if="device !== 'mobile'">
-      <!-- todo 已登录 不展示 sign up 和 log in -->
-      <span @click="clickHandler(0)">Sign Up</span>
-      <span @click="clickHandler(1)">Log In</span>
-      <span
-        v-if="$route.path !== '/userCenter'"
-        class="user-center"
-        @click="clickHandler(2)"
-      >
-        <i class="el-icon-user-solid" />
-      </span>
+      <template v-if="!u_name">
+        <span @click="clickHandler(0)">Sign Up</span>
+        <span @click="clickHandler(1)">Log In</span>
+      </template>
+
+      <template v-if="u_name">
+        <template v-if="$route.path !== '/userCenter'">
+          <span class="user-center" @click="clickHandler(2)">
+            <i class="el-icon-user-solid" />
+          </span>
+        </template>
+        <template v-else>
+          <span class="user-center" @click="clickHandler(9)">
+            <i class="el-icon-s-home" />
+          </span>
+        </template>
+      </template>
     </section>
   </el-row>
 </template>
@@ -24,14 +31,33 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'TopBanner',
+  data() {
+    return {}
+  },
+  mounted() {},
   computed: {
-    ...mapGetters(['device']),
+    ...mapGetters(['device', 'u_id', 'u_name']),
 
     projectName() {
       return process.env.VUE_APP_PROJECT_NAME
     }
   },
   methods: {
+    isLogin() {
+      if (sessionStorage.getItem('GameGemUID')) {
+        this.$store.commit('user/SET_UID', sessionStorage.getItem('GameGemUID'))
+      }
+
+      if (sessionStorage.getItem('GameGemUName')) {
+        this.$store.commit(
+          'user/SET_UNAME',
+          sessionStorage.getItem('GameGemUName')
+        )
+      }
+
+      return true
+    },
+
     clickHandler: function (type) {
       let path = ''
       if (type === 0) {
@@ -40,10 +66,19 @@ export default {
         path = 'logIn'
       } else if (type === 2) {
         path = '/userCenter'
+      } else if (type === 9) {
+        path = '/'
       }
-      this.$router.push({
-        path: path
-      })
+
+      if (type !== 9) {
+        this.$router.push({
+          path: path
+        })
+      } else {
+        this.$router.replace({
+          path: path
+        })
+      }
     }
   }
 }
@@ -52,7 +87,7 @@ export default {
 <style lang="scss" scoped>
 .top-banner-container {
   line-height: 35px;
-  padding: 0 30px;
+  padding: 0 18px;
   color: #fff;
   background: #7359a4;
   font-size: 14px;
@@ -78,7 +113,6 @@ export default {
     }
 
     .user-center {
-      margin-left: 15px;
     }
   }
 }
