@@ -10,7 +10,6 @@
       <slot></slot>
     </span>
 
-    <!--
     <el-checkbox-group v-model="checked" @change="changeHandler">
       <template v-for="(item, index) in menuList">
         <el-row class="menu-item" :key="index">
@@ -20,14 +19,15 @@
         </el-row>
       </template>
     </el-checkbox-group>
-    -->
-    <template v-for="(item, index) in menuList">
+
+    <!-- <template v-for="(item, index) in menuList">
       <el-row class="menu-item" :key="index">
         <el-radio v-model="radio" :label="item.id" @change="changeHandler">
           {{ item.title }}
         </el-radio>
       </el-row>
     </template>
+    -->
   </el-popover>
 </template>
 

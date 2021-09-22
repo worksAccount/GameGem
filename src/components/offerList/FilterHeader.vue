@@ -210,8 +210,8 @@ export default {
       }
 
       if (type === 'category') {
-        this.searchParams.category = value
-        this.$store.commit('filter/TRIGGER_CATEGORY')
+        this.searchParams.category = value.join(',')
+        // this.$store.commit('filter/TRIGGER_CATEGORY') // 多选不隐藏 popover
       }
 
       if (type === 'sort') {

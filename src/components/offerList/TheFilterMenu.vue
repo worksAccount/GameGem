@@ -84,7 +84,7 @@ export default {
 
     changeHandler: function (type, value) {
       if (type === 'category') {
-        this.$store.commit('filter/TRIGGER_CATEGORY')
+        // this.$store.commit('filter/TRIGGER_CATEGORY') // 多选不隐藏 popover
       }
 
       if (type === 'sort') {
