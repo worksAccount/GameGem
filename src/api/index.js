@@ -65,3 +65,51 @@ export function getList(data) {
     method: 'get'
   })
 }
+
+export function changePlayerPassword(data) {
+  let url = '/offerwall/api/ads/changePlayerPassword'
+  const keys = Object.keys(data)
+  if (keys.length) {
+    keys.map((key, index) => {
+      if (index === 0) url += `?${key}=${data[key]}`
+      if (index !== 0) url += `&${key}=${data[key]}`
+    })
+  }
+
+  return request({
+    url: url,
+    method: 'post'
+  })
+}
+
+export function getVerificationCode(data) {
+  let url = '/offerwall/api/ads/getCode'
+  const keys = Object.keys(data)
+  if (keys.length) {
+    keys.map((key, index) => {
+      if (index === 0) url += `?${key}=${data[key]}`
+      if (index !== 0) url += `&${key}=${data[key]}`
+    })
+  }
+
+  return request({
+    url: url,
+    method: 'post'
+  })
+}
+
+export function changePlayerPasswordByCode(data) {
+  let url = '/offerwall/api/ads/changePlayerPasswordByCode'
+  const keys = Object.keys(data)
+  if (keys.length) {
+    keys.map((key, index) => {
+      if (index === 0) url += `?${key}=${data[key]}`
+      if (index !== 0) url += `&${key}=${data[key]}`
+    })
+  }
+
+  return request({
+    url: url,
+    method: 'post'
+  })
+}

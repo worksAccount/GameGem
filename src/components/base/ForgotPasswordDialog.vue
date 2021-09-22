@@ -15,8 +15,28 @@
         label-position="top"
         label-width="100px"
       >
-        <el-form-item label="Email" prop="mail">
+        <el-form-item label="E-mail" prop="mail">
           <el-input v-model="form.mail"></el-input>
+        </el-form-item>
+
+        <el-form-item label="Verification Code" prop="code">
+          <el-input v-model="form.code" auto-complete="false">
+            <el-button
+              slot="append"
+              v-show="!time"
+              :style="{ color: '#fff', backgroundColor: '#7359a4' }"
+              @click="sendVerificationCode"
+            >
+              send verification code
+            </el-button>
+            <el-button
+              slot="append"
+              v-show="time"
+              disabled
+            >
+              {{ time }}s
+            </el-button>
+          </el-input>
         </el-form-item>
 
         <el-form-item label="New password" prop="pwd">
@@ -39,6 +59,8 @@
 </template>
 
 <script>
+import { getVerificationCode, changePlayerPasswordByCode } from '@/api'
+
 export default {
   name: 'ChangePasswordDialog',
   data() {
@@ -55,16 +77,24 @@ export default {
 
       form: {
         mail: '',
+        code: '', // verification code
         pwd: '',
         rePwd: '' // 密码确认
       },
       rules: {
         mail: [
-          { required: true, message: 'Email is required', trigger: 'blur' },
+          { required: true, message: 'E-mail is required', trigger: 'blur' },
           {
             type: 'email',
-            message: 'Please enter a valid email',
+            message: 'Please enter a valid E-mail',
             trigger: ['blur', 'change']
+          }
+        ],
+        code: [
+          {
+            required: true,
+            message: 'Verification Code is required',
+            trigger: 'blur'
           }
         ],
         pwd: [
@@ -94,7 +124,12 @@ export default {
           },
           { validator: validation_password, trigger: blur }
         ]
-      }
+      },
+
+      time: 0,
+      timer: null,
+
+      code: ''
     }
   },
 
@@ -110,13 +145,105 @@ export default {
 
     reset: function () {
       this.form = this.$options.data().form
+      if (this.timer) clearInterval(this.timer)
+      this.timer = null
+      this.time = 0
       if (this.$refs['form']) this.$refs['form'].clearValidate()
+    },
+
+    sendVerificationCode: function () {
+      if (!this.form.mail) {
+        this.$notify({
+          title: '',
+          message: 'please type in E-mail',
+          type: 'warning'
+        })
+        return
+      }
+
+      const params = {
+        resetMail: this.form.mail,
+        resetType: '0' // 默认为0 【邮箱找回】
+      }
+
+      getVerificationCode(params).then(res => {
+        if (res && res.code === 200) {
+          this.$notify({
+            title: '',
+            message: res.message,
+            type: 'success'
+          })
+
+          this.code = res.result.code // todo 发送的 verification code
+
+          this.timerInit()
+        } else {
+          this.$notify({
+            title: '',
+            message: res.message,
+            type: 'error'
+          })
+        }
+      })
+    },
+
+    timerInit: function () {
+      const TIME_COUNT = 60
+      if (!this.timer) {
+        this.time = TIME_COUNT
+        this.timer = setInterval(() => {
+          if (this.time && this.time <= TIME_COUNT) {
+            this.time--
+          } else {
+            clearInterval(this.timer)
+            this.timer = null
+          }
+        }, 1000)
+      }
     },
 
     clickHandler: function () {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          // todo set new password
+          if (this.code !== this.form.code) {
+            this.$notify({
+              title: '',
+              message: 'wrong verification code',
+              type: 'error'
+            })
+          } else {
+            this.doPasswordForgot()
+          }
+        }
+      })
+    },
+
+    doPasswordForgot: function () {
+      const params = {
+        playerName: this.form.mail,
+        code: this.form.code, // todo verification code
+        newPassWord: this.form.pwd
+      }
+      changePlayerPasswordByCode(params).then(res => {
+        if (res && res.code === 200) {
+          this.$notify({
+            title: '',
+            message: res.message,
+            type: 'success'
+          })
+
+          this.$store.commit('user/CLEAN_UID')
+          this.$store.commit('user/CLEAN_UNAME')
+
+          this.$router.replace({
+            path: '/logIn'
+          })
+        } else {
+          this.$notify({
+            title: '',
+            message: res.message,
+            type: 'error'
+          })
         }
       })
     }
