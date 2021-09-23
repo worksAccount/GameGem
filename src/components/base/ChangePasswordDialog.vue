@@ -15,6 +15,10 @@
         label-position="top"
         label-width="100px"
       >
+        <el-form-item label="Your E-mail" prop="mail">
+          <el-input v-model="form.mail"></el-input>
+        </el-form-item>
+
         <el-form-item label="Current password" prop="curPwd">
           <el-input v-model="form.curPwd"></el-input>
         </el-form-item>
@@ -39,6 +43,8 @@
 </template>
 
 <script>
+import { changePlayerPassword } from '@/api'
+
 export default {
   name: 'ChangePasswordDialog',
   data() {
@@ -54,11 +60,19 @@ export default {
       visibility: false,
 
       form: {
+        mail: '',
         curPwd: '',
         pwd: '',
         rePwd: '' // 密码确认
       },
       rules: {
+        mail: [
+          {
+            required: true,
+            message: 'E-mail is required',
+            trigger: 'blur'
+          }
+        ],
         curPwd: [
           {
             required: true,
@@ -115,7 +129,33 @@ export default {
     clickHandler: function () {
       this.$refs['form'].validate(valid => {
         if (valid) {
-          // todo set new password
+          const params = {
+            playerName: this.form.mail,
+            playerPassword: this.form.curPwd,
+            newPassWord: this.form.pwd
+          }
+          changePlayerPassword(params).then(res => {
+            if (res && res.code === 200) {
+              this.$notify({
+                title: '',
+                message: res.message,
+                type: 'success'
+              })
+
+              this.$store.commit('user/CLEAN_UID')
+              this.$store.commit('user/CLEAN_UNAME')
+
+              this.$router.replace({
+                path: '/logIn'
+              })
+            } else {
+              this.$notify({
+                title: '',
+                message: res.message,
+                type: 'error'
+              })
+            }
+          })
         }
       })
     }

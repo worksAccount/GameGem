@@ -26,7 +26,7 @@
           label-position="top"
           label-width="100px"
         >
-          <el-form-item label="Email" prop="mail">
+          <el-form-item label="E-mail" prop="mail">
             <el-input v-model="form.mail"></el-input>
           </el-form-item>
 
@@ -81,10 +81,10 @@ export default {
       },
       rules: {
         mail: [
-          { required: true, message: 'Email is required', trigger: 'blur' },
+          { required: true, message: 'E-mail is required', trigger: 'blur' },
           {
             type: 'email',
-            message: 'Please enter a valid email',
+            message: 'Please enter a valid E-mail',
             trigger: ['blur', 'change']
           }
         ],

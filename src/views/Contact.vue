@@ -76,7 +76,7 @@
             <el-input v-model="form.skype"></el-input>
           </el-form-item>
 
-          <el-form-item label="Email" prop="email">
+          <el-form-item label="E-mail" prop="email">
             <el-input v-model="form.email"></el-input>
           </el-form-item>
 
