@@ -37,6 +37,13 @@
           <span style="padding-left: 8px">Robux</span>
         </el-button>
       </div>
+
+      <el-row>
+        {{ isInProgress }}
+        <el-button type="success" round>
+          Resend E-mail
+        </el-button>
+      </el-row>
     </el-row>
   </el-dialog>
 </template>
@@ -58,12 +65,23 @@ export default {
   },
   data() {
     return {
-      visible: false
+      visible: false,
+      isInProgress: false
     }
   },
   methods: {
-    init: function () {
+    /**
+     *
+     * @param isInProgress 是否是 点击 进行中 list 查看详情 如果是 展示 重新发送任务邮件 按钮
+     */
+    init: function (isInProgress) {
       this.visible = true
+
+      if (isInProgress) {
+        this.isInProgress = true
+      } else {
+        this.isInProgress = false
+      }
     },
 
     addTask: function (item) {

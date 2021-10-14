@@ -1,8 +1,10 @@
 <template>
   <el-row class="container">
+    <!--
     <el-row class="title">
       <el-row>User Center</el-row>
     </el-row>
+    -->
 
     <el-row class="content">
       <el-row> E-mail: {{ uName }} </el-row>
@@ -58,18 +60,19 @@ export default {
 <style lang="scss" scoped>
 .container {
   color: #424242;
-  text-align: center;
-  font-size: 32px;
+  /*text-align: center;*/
+  /*font-size: 32px;*/
   font-weight: 700;
-  line-height: 60px;
-  margin-top: 40px;
+  /*line-height: 60px;*/
+  line-height: 40px;
+  /*margin-top: 40px;*/
   padding: 0 2%;
 
   .title {
   }
 
   .content {
-    margin-top: 40px;
+    /*margin-top: 40px;*/
     text-align: center;
     font-size: 18px;
     font-weight: normal;

@@ -10,7 +10,11 @@
     <el-row class="content">
       <el-tabs v-model="activeName" type="card" @tab-click="clickHandler">
         <el-tab-pane label="In Progress" name="one">
-          <reward-list :data-list="listInProgress" v-on="$listeners" />
+          <reward-list
+            :data-list="listInProgress"
+            :is-in-progress="true"
+            v-on="$listeners"
+          />
         </el-tab-pane>
         <el-tab-pane label="Completed" name="two">
           <reward-list :data-list="listCompleted" v-on="$listeners" />
@@ -52,12 +56,15 @@ export default {
       getTask(params).then(res => {
         if (res && res.code === 200) {
           // status=1 未完成；status=2 已完成
+          // 修改为字段 taskStatus=1 未完成；taskStatus=2 已完成
           const ls = res.result.records
           this.listInProgress = ls.filter(item => {
-            return item.status === 1
+            // return item.status === 1
+            return item.taskStatus === 1
           })
           this.listCompleted = ls.filter(item => {
-            return item.status === 2
+            // return item.status === 2
+            return item.taskStatus === 2
           })
         } else {
           this.listInProgress = []

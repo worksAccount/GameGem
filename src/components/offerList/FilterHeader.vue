@@ -54,19 +54,44 @@
 
     <el-row
       class="right"
-      :style="{ width: device !== 'mobile' ? '220px' : '285px' }"
+      :style="{ width: device !== 'mobile' ? '250px' : '250px' }"
     >
       <template v-for="(item, index) in list">
-        <div
-          v-if="item.position === 'right'"
-          :key="index"
-          class="item"
-          :style="{ padding: !item.title ? '0 10px' : '0 20px 0 10px' }"
-          @click="clickHandler(item)"
-        >
-          <i :class="item.icon" />
-          {{ item.title }}
-        </div>
+        <template v-if="item.position === 'right'">
+          <template v-if="item.id !== 7">
+            <div
+              :key="index"
+              class="item"
+              :style="{ padding: !item.title ? '0 10px' : '0 20px 0 10px' }"
+              @click="clickHandler(item)"
+            >
+              <i :class="item.icon" />
+              {{ item.title }}
+            </div>
+          </template>
+          <template v-else>
+            <!-- id 7 个人中心 -->
+            <el-popover
+              :key="index"
+              v-model="popoverVisibility"
+              placement="top-start"
+              width="300"
+              trigger="manual"
+            >
+              <div
+                slot="reference"
+                class="item"
+                :style="{ padding: !item.title ? '0 10px' : '0 20px 0 10px' }"
+                @click="clickHandler(item)"
+              >
+                <i :class="item.icon" />
+                {{ item.title }}
+              </div>
+
+              <user-center />
+            </el-popover>
+          </template>
+        </template>
       </template>
     </el-row>
 
@@ -90,6 +115,7 @@ import DeviceDialog from '~components/offerList/DeviceDialog'
 import CategoryMenu from '~components/offerList/CategoryMenu'
 import SortMenu from '~components/offerList/SortMenu'
 import DetailDialog from '~components/offerList/DetailDialog'
+import UserCenter from '~views/UserCenter'
 
 import TheFilterMenu from '~components/offerList/TheFilterMenu'
 
@@ -101,7 +127,8 @@ export default {
     CategoryMenu,
     SortMenu,
     TheFilterMenu,
-    DetailDialog
+    DetailDialog,
+    UserCenter
   },
   mixins: [ResizeHandlerMixin],
   data() {
@@ -152,6 +179,13 @@ export default {
           position: 'right'
         },
         {
+          id: 7,
+          title: '',
+          sort: '',
+          icon: 'el-icon-user-solid',
+          position: 'right'
+        },
+        {
           id: 5,
           title: 'User Terms',
           sort: '',
@@ -165,7 +199,9 @@ export default {
         estimateDays: '' // sort by: 0-Most Popular 1-High to Low 2-Level of Difficulty
       },
 
-      offerItem: {}
+      offerItem: {},
+
+      popoverVisibility: false
     }
   },
   computed: {
@@ -183,6 +219,11 @@ export default {
         this.$router.push({
           path: '/'
         })
+      }
+
+      if (item.id === 7) {
+        // 个人中心 popover
+        this.popoverVisibility = !this.popoverVisibility
       }
 
       if (item.id === 4) {
@@ -215,8 +256,8 @@ export default {
       }
 
       if (type === 'sort') {
-        this.searchParams.estimateDays = value
-        this.$store.commit('filter/TRIGGER_SORT')
+        this.searchParams.estimateDays = value.join(',')
+        // this.$store.commit('filter/TRIGGER_SORT') // 多选不隐藏 popover
       }
 
       if (type === 'reset') {
@@ -237,9 +278,11 @@ export default {
       this.$emit('search', this.searchParams)
     },
 
-    itemClickHandler: function (item) {
+    itemClickHandler: function (obj) {
+      const item = obj.item
+      const isInProgress = obj.isInProgress
       this.offerItem = item
-      this.$refs['detailDialog'].init()
+      this.$refs['detailDialog'].init(isInProgress)
     }
   }
 }
@@ -262,7 +305,7 @@ export default {
   justify-content: flex-end;
 
   .content {
-    width: calc(100% - 160px);
+    width: calc(100% - 250px);
   }
 
   .right {
