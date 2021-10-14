@@ -21,7 +21,10 @@
           label-width="100px"
         >
           <el-form-item label="Your E-mail" prop="mail">
-            <el-input v-model="form.mail"></el-input>
+            <el-input
+              v-model="form.mail"
+              @keydown.enter.native="clickHandler"
+            />
           </el-form-item>
 
           <el-form-item prop="pwd">
@@ -34,7 +37,11 @@
               </div>
             </div>
 
-            <el-input v-model="form.pwd" type="password"></el-input>
+            <el-input
+              v-model="form.pwd"
+              type="password"
+              @keydown.enter.native="clickHandler"
+            />
           </el-form-item>
         </el-form>
       </el-row>
@@ -74,8 +81,10 @@ export default {
       loading: false,
 
       form: {
-        mail: '',
-        pwd: ''
+        // mail: '',
+        // pwd: ''
+        mail: 'jinghongzhixian@126.com',
+        pwd: '1225xushuA'
       },
       rules: {
         mail: [
@@ -102,6 +111,17 @@ export default {
       this.$refs['forgotPasswordDialog'].show()
     },
     doLogIn: function () {
+      // S test only
+      // this.$store.commit('user/SET_UID', 'id id')
+      // this.$store.commit('user/SET_UNAME', 'name name')
+      //
+      // this.$router.replace({
+      //   path: '/offerList'
+      // })
+      //
+      // return
+      // E test only
+
       const params = {
         playerName: this.form.mail,
         playerPassword: this.form.pwd

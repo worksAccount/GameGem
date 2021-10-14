@@ -78,6 +78,7 @@ export default {
     },
 
     reset: function () {
+      this.checked = []
       this.radio = ''
     },
 

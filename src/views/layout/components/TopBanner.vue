@@ -12,8 +12,25 @@
 
       <template v-if="u_name">
         <template v-if="$route.path !== '/userCenter'">
-          <span class="user-center" @click="clickHandler(2)">
-            <i class="el-icon-user-solid" />
+          <!-- @click="clickHandler(2)" -->
+          <span class="user-center" style="margin: 0 !important">
+            <!--<i class="el-icon-user-solid" />-->
+            <el-popover
+              v-model="popoverVisibility"
+              placement="top-start"
+              width="300"
+              trigger="manual"
+            >
+              <span
+                slot="reference"
+                style="margin: 0 !important"
+                @click="clickHandler(7)"
+              >
+                <i class="el-icon-user-solid" />
+              </span>
+
+              <user-center />
+            </el-popover>
           </span>
         </template>
         <template v-else>
@@ -29,10 +46,17 @@
 <script>
 import { mapGetters } from 'vuex'
 
+import UserCenter from '~views/UserCenter'
+
 export default {
   name: 'TopBanner',
+  components: {
+    UserCenter
+  },
   data() {
-    return {}
+    return {
+      popoverVisibility: false
+    }
   },
   mounted() {},
   computed: {
@@ -70,14 +94,19 @@ export default {
         path = '/'
       }
 
-      if (type !== 9) {
-        this.$router.push({
-          path: path
-        })
+      if (type === 7) {
+        // 个人中心 popover
+        this.popoverVisibility = !this.popoverVisibility
       } else {
-        this.$router.replace({
-          path: path
-        })
+        if (type !== 9) {
+          this.$router.push({
+            path: path
+          })
+        } else {
+          this.$router.replace({
+            path: path
+          })
+        }
       }
     }
   }

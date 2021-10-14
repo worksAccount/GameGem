@@ -37,11 +37,18 @@ export default {
   props: {
     dataList: {
       type: Array
+    },
+    isInProgress: {
+      type: Boolean,
+      default: () => false
     }
   },
   methods: {
     goDetailPage: function (item) {
-      this.$emit('itemClick', item)
+      this.$emit('itemClick', {
+        item: item,
+        isInProgress: this.isInProgress
+      })
     }
   }
 }

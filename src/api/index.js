@@ -41,6 +41,38 @@ export function addTask(data) {
   })
 }
 
+export function addTaskSendMail(data) {
+  let url = '/offerwall/api/ads/addTaskSendMail'
+  const keys = Object.keys(data)
+  if (keys.length) {
+    keys.map((key, index) => {
+      if (index === 0) url += `?${key}=${data[key]}`
+      if (index !== 0) url += `&${key}=${data[key]}`
+    })
+  }
+  return request({
+    url: url,
+    method: 'post',
+    data
+  })
+}
+
+export function sendTaskMail(data) {
+  let url = '/offerwall/api/ads/sendTaskMail'
+  const keys = Object.keys(data)
+  if (keys.length) {
+    keys.map((key, index) => {
+      if (index === 0) url += `?${key}=${data[key]}`
+      if (index !== 0) url += `&${key}=${data[key]}`
+    })
+  }
+  return request({
+    url: url,
+    method: 'post',
+    data
+  })
+}
+
 export function getTask(data) {
   let url = '/offerwall/api/ads/queryTasks'
   return request({
@@ -111,5 +143,14 @@ export function changePlayerPasswordByCode(data) {
   return request({
     url: url,
     method: 'post'
+  })
+}
+
+export function queryBalanceRecords(data) {
+  let url = '/offerwall/api/ads/queryBalanceRecords'
+  return request({
+    url: url,
+    method: 'get',
+    data
   })
 }

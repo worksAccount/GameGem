@@ -3,6 +3,8 @@
     :visible.sync="visibility"
     :close-on-click-modal="false"
     :close-on-press-escape="false"
+    :append-to-body="true"
+    :modal-append-to-body="true"
     class="change-password-dialog"
     title="change password"
     width="95%"
@@ -16,7 +18,7 @@
         label-width="100px"
       >
         <el-form-item label="Your E-mail" prop="mail">
-          <el-input v-model="form.mail"></el-input>
+          <el-input v-model="form.mail" readonly></el-input>
         </el-form-item>
 
         <el-form-item label="Current password" prop="curPwd">
@@ -43,6 +45,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import { changePlayerPassword } from '@/api'
 
 export default {
@@ -111,6 +115,14 @@ export default {
     }
   },
 
+  computed: {
+    ...mapGetters({
+      mail: 'u_name'
+    })
+  },
+
+  created() {},
+
   methods: {
     show: function () {
       this.visibility = true
@@ -123,6 +135,7 @@ export default {
 
     reset: function () {
       this.form = this.$options.data().form
+      this.form.mail = this.mail
       if (this.$refs['form']) this.$refs['form'].clearValidate()
     },
 

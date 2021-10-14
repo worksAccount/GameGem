@@ -23,7 +23,11 @@
             </div>
 
             <el-row class="icon-container">
-              <i v-if="deviceChosen === '0'" class="el-icon-check" />
+              <!--<i v-if="deviceChosen === '0'" class="el-icon-check" />-->
+              <i
+                v-if="deviceChosen.indexOf('0') !== -1"
+                class="el-icon-check"
+              />
             </el-row>
           </el-card>
         </el-col>
@@ -38,7 +42,11 @@
             </div>
 
             <el-row class="icon-container">
-              <i v-if="deviceChosen === '1'" class="el-icon-check" />
+              <!--<i v-if="deviceChosen === '1'" class="el-icon-check" />-->
+              <i
+                v-if="deviceChosen.indexOf('1') !== -1"
+                class="el-icon-check"
+              />
             </el-row>
           </el-card>
         </el-col>
@@ -53,7 +61,11 @@
             </div>
 
             <el-row class="icon-container">
-              <i v-if="deviceChosen === '2'" class="el-icon-check" />
+              <!--<i v-if="deviceChosen === '2'" class="el-icon-check" />-->
+              <i
+                v-if="deviceChosen.indexOf('2') !== -1"
+                class="el-icon-check"
+              />
             </el-row>
           </el-card>
         </el-col>
@@ -77,7 +89,8 @@ export default {
       imgIpad: require('~assets/images/components/ipad.png'),
       imgAndroid: require('~assets/images/components/android.png'),
 
-      deviceChosen: '' // 0-android 1-iphone 2-ipad
+      // deviceChosen: '' // 0-android 1-iphone 2-ipad
+      deviceChosen: [] // 0-android 1-iphone 2-ipad
     }
   },
   methods: {
@@ -85,14 +98,20 @@ export default {
       this.visible = true
     },
     clickHandler: function (e) {
-      this.deviceChosen = e
+      // this.deviceChosen = e
+      const index = this.deviceChosen.indexOf(e)
+      if (index !== -1) {
+        this.deviceChosen.splice(index, 1)
+      } else {
+        this.deviceChosen.push(e)
+      }
     },
     submitHandler: function () {
       this.visible = false
       this.$emit('change', this.deviceChosen)
     },
     reset: function () {
-      this.deviceChosen = ''
+      this.deviceChosen = []
     }
   }
 }

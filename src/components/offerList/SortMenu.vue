@@ -10,6 +10,17 @@
       <slot></slot>
     </span>
 
+    <el-checkbox-group v-model="checked" @change="changeHandler">
+      <template v-for="(item, index) in menuList">
+        <el-row class="menu-item" :key="index">
+          <el-checkbox :label="item.id" :key="index">
+            {{ item.title }}
+          </el-checkbox>
+        </el-row>
+      </template>
+    </el-checkbox-group>
+
+    <!--
     <template v-for="(item, index) in menuList">
       <el-row class="menu-item" :key="index">
         <el-radio v-model="radio" :label="item.id" @change="changeHandler">
@@ -17,6 +28,7 @@
         </el-radio>
       </el-row>
     </template>
+    -->
   </el-popover>
 </template>
 
@@ -49,6 +61,7 @@ export default {
           title: 'Level of Difficulty'
         }
       ],
+      checked: [],
       radio: ''
     }
   },
@@ -66,6 +79,7 @@ export default {
     },
 
     reset: function () {
+      this.checked = []
       this.radio = ''
     },
 

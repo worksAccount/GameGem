@@ -43,6 +43,7 @@
 <script>
 import CategoryMenu from '~components/offerList/CategoryMenu'
 import SortMenu from '~components/offerList/SortMenu'
+
 export default {
   name: 'TheFilterMenu',
   components: {
@@ -88,7 +89,7 @@ export default {
       }
 
       if (type === 'sort') {
-        this.$store.commit('filter/TRIGGER_SORT')
+        // this.$store.commit('filter/TRIGGER_SORT') // 多选不隐藏 popover
       }
 
       this.$emit('change', type, value)
