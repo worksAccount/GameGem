@@ -1,15 +1,16 @@
 <template>
   <el-dialog
+    :visible.sync="visible"
     class="reward-dialog"
     title="现有积分/GameGem"
     :append-to-body="true"
     :modal-append-to-body="true"
-    :visible.sync="visible"
     width="90%"
+    top="20px"
   >
     <el-row class="content">
       <el-tabs v-model="activeName" type="card" @tab-click="clickHandler">
-        <el-tab-pane label="In Progress" name="one">
+        <el-tab-pane label="In Process" name="one">
           <reward-list
             :data-list="listInProgress"
             :is-in-progress="true"

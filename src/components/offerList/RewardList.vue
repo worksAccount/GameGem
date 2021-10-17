@@ -15,7 +15,10 @@
 
                   <el-divider />
 
-                  <el-row class="description">{{ item.des }}</el-row>
+                  <el-row class="description-container">
+                    <el-row class="description">{{ item.des }}</el-row>
+                    <el-row class="goal">Goal: {{ item.goal }}</el-row>
+                  </el-row>
                 </div>
               </el-row>
             </el-card>
@@ -92,6 +95,18 @@ export default {
           flex: 1;
           min-width: 375px;
           cursor: pointer;
+
+          .description-container {
+            display: flex;
+
+            .description {
+              flex: 1;
+            }
+
+            .goal {
+              width: 100px;
+            }
+          }
         }
       }
     }

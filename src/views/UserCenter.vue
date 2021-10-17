@@ -8,6 +8,7 @@
 
     <el-row class="content">
       <el-row> E-mail: {{ uName }} </el-row>
+      <el-row> Balance: {{ uBalance || 0 }} pts </el-row>
 
       <el-row>
         <el-button type="text" @click="clickHandler(1)">
@@ -34,11 +35,13 @@ export default {
   },
   data() {
     return {
-      uName: ''
+      uName: '',
+      uBalance: 0
     }
   },
   mounted() {
     this.uName = sessionStorage.getItem('GameGemUName')
+    this.uBalance = sessionStorage.getItem('GameGemUBalance')
   },
   methods: {
     clickHandler: function (type) {
@@ -47,6 +50,7 @@ export default {
       } else if (type === 2) {
         this.$store.commit('user/CLEAN_UID')
         this.$store.commit('user/CLEAN_UNAME')
+        this.$store.commit('user/CLEAN_U_BALANCE')
 
         this.$router.replace({
           path: '/'

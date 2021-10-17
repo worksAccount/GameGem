@@ -6,6 +6,7 @@
     class="forgot-password-dialog"
     title="forgot password"
     width="95%"
+    top="20px"
   >
     <el-row class="dialog-body">
       <el-form

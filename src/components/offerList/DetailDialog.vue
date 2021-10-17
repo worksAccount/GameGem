@@ -1,58 +1,82 @@
 <template>
-  <el-dialog
-    class="detail-dialog"
-    :title="item.name || 'OfferDetail'"
-    :append-to-body="true"
-    :modal-append-to-body="true"
-    :visible.sync="visible"
-    width="90%"
-  >
-    <el-row class="content">
-      <el-row class="icon-container">
-        <div class="img-container">
-          <img :src="item.icon" />
-        </div>
+  <div class="detail-container">
+    <el-dialog
+      :visible.sync="visible"
+      class="detail-dialog"
+      :title="item.name || 'OfferDetail'"
+      :append-to-body="true"
+      :modal-append-to-body="true"
+      width="90%"
+      top="20px"
+    >
+      <el-row class="content">
+        <el-row class="icon-container">
+          <div class="img-container">
+            <img :src="item.icon" />
+          </div>
 
-        <div class="img-description">
-          A quick, easy, and thrilling way to earn!
-        </div>
-      </el-row>
-
-      <el-row class="content-container">
-        <el-row class="title">Instructions/Guidelines:</el-row>
-        <el-row class="sub-title">
-          Pro Tip: Reach your goal faster by purchasing the xxx$ coin package!
+          <div class="img-description">
+            A quick, easy, and thrilling way to earn!
+          </div>
         </el-row>
-        <el-row
-          class="description"
-          v-html="getDescriptionHtml(item.des)"
-        ></el-row>
-      </el-row>
 
-      <div class="button-container" v-if="!isReward">
-        <el-button type="success" round @click="addTask(item)">
-          <span style="padding-right: 8px">Continue To Earn</span>
-          <i class="el-icon-coin" />
-          <span>+{{ item.goal }}</span>
-          <span style="padding-left: 8px">Robux</span>
-        </el-button>
-      </div>
+        <el-row class="content-container">
+          <el-row class="title">Instructions/Guidelines:</el-row>
+          <el-row class="sub-title">
+            Pro Tip: Reach your goal faster by purchasing the xxx$ coin package!
+          </el-row>
+          <el-row
+            class="description"
+            v-html="getDescriptionHtml(item.des)"
+          ></el-row>
+        </el-row>
 
-      <el-row>
-        {{ isInProgress }}
-        <el-button type="success" round>
-          Resend E-mail
-        </el-button>
+        <el-row class="content-container">
+          <el-row class="title">Goal:</el-row>
+          <el-row class="sub-title">
+            {{ item.goal }}
+          </el-row>
+        </el-row>
+
+        <template v-if="!item.isInProcess && !item.isComplete">
+          <div class="button-container" v-if="!isReward">
+            <el-button type="success" round @click="addTask(item)">
+              <!--
+              <span style="padding-right: 8px">Continue To Earn</span>
+              <i class="el-icon-coin" />
+              <span>+{{ item.goal }}</span>
+              <span style="padding-left: 8px">Robux</span>
+              -->
+              Take the task
+            </el-button>
+          </div>
+        </template>
+
+        <el-row v-if="isInProgress || item.isInProcess">
+          <!-- {{ isInProgress }} -->
+          <div class="button-container">
+            <el-button type="success" round @click="clickHandler">
+              Resend E-mail
+            </el-button>
+          </div>
+        </el-row>
       </el-row>
-    </el-row>
-  </el-dialog>
+    </el-dialog>
+
+    <email-dialog ref="emailDialog" :item="item" :is-resend="isResend" />
+  </div>
 </template>
 
 <script>
-import { addTask } from '@/api'
+import EmailDialog from '~components/base/EmailDialog'
+
+// import { addTask } from '@/api'
 
 export default {
   name: 'DetailDialog',
+  components: {
+    EmailDialog
+  },
   props: {
     item: {
       type: Object,
@@ -66,7 +90,8 @@ export default {
   data() {
     return {
       visible: false,
-      isInProgress: false
+      isInProgress: false,
+      isResend: false
     }
   },
   methods: {
@@ -85,25 +110,28 @@ export default {
     },
 
     addTask: function (item) {
-      const params = {
-        offerId: item.id,
-        playerId: window.sessionStorage.getItem('GameGemUID')
-      }
-      addTask(params).then(res => {
-        if (res && res.code === 200) {
-          this.$notify({
-            title: '',
-            message: res.message,
-            type: 'success'
-          })
-        } else {
-          this.$notify({
-            title: '',
-            message: res.message,
-            type: 'error'
-          })
-        }
-      })
+      this.isResend = false
+      this.$refs['emailDialog'].init()
+
+      // const params = {
+      //   offerId: item.id,
+      //   playerId: window.sessionStorage.getItem('GameGemUID')
+      // }
+      // addTask(params).then(res => {
+      //   if (res && res.code === 200) {
+      //     this.$notify({
+      //       title: '',
+      //       message: res.message,
+      //       type: 'success'
+      //     })
+      //   } else {
+      //     this.$notify({
+      //       title: '',
+      //       message: res.message,
+      //       type: 'error'
+      //     })
+      //   }
+      // })
     },
 
     getDescriptionHtml: function (str) {
@@ -112,6 +140,11 @@ export default {
         res = str.replace(/\n/g, '<br/>')
       }
       return res
+    },
+
+    clickHandler: function () {
+      this.isResend = true
+      this.$refs['emailDialog'].init()
     }
   }
 }
