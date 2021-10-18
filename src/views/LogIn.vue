@@ -81,10 +81,10 @@ export default {
       loading: false,
 
       form: {
-        // mail: '',
-        // pwd: ''
-        mail: 'jinghongzhixian@126.com',
-        pwd: '1225xushuA'
+        mail: '',
+        pwd: ''
+        // mail: 'jinghongzhixian@126.com',
+        // pwd: '1225xushuA'
       },
       rules: {
         mail: [
@@ -139,9 +139,11 @@ export default {
           const loginObj = res.result
           const userId = loginObj.id
           const userName = loginObj.playerName
+          const balance = loginObj.balance
 
           this.$store.commit('user/SET_UID', userId)
           this.$store.commit('user/SET_UNAME', userName)
+          this.$store.commit('user/SET_BALANCE', balance)
 
           this.$router.replace({
             path: '/offerList'

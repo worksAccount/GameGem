@@ -148,9 +148,16 @@ export function changePlayerPasswordByCode(data) {
 
 export function queryBalanceRecords(data) {
   let url = '/offerwall/api/ads/queryBalanceRecords'
+  const keys = Object.keys(data)
+  if (keys.length) {
+    keys.map((key, index) => {
+      if (index === 0) url += `?${key}=${data[key]}`
+      if (index !== 0) url += `&${key}=${data[key]}`
+    })
+  }
+
   return request({
     url: url,
-    method: 'get',
-    data
+    method: 'get'
   })
 }

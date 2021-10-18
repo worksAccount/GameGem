@@ -52,6 +52,12 @@
       </template>
     </el-row>
 
+    <el-row class="right">
+      <div class="item" style="padding: 0" @click="goBalanceHistory">
+        {{ u_balance || 0 }} pts
+      </div>
+    </el-row>
+
     <el-row
       class="right"
       :style="{ width: device !== 'mobile' ? '250px' : '250px' }"
@@ -205,7 +211,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['device'])
+    ...mapGetters(['device', 'u_balance'])
   },
   methods: {
     clickHandler: function (item) {
@@ -283,6 +289,12 @@ export default {
       const isInProgress = obj.isInProgress
       this.offerItem = item
       this.$refs['detailDialog'].init(isInProgress)
+    },
+
+    goBalanceHistory: function () {
+      this.$router.push({
+        path: '/balanceHistory'
+      })
     }
   }
 }
@@ -305,7 +317,8 @@ export default {
   justify-content: flex-end;
 
   .content {
-    width: calc(100% - 250px);
+    /*width: calc(100% - 250px);*/
+    flex: 1;
   }
 
   .right {

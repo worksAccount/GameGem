@@ -69,11 +69,18 @@ const routes = [
     name: 'Support',
     component: () => import('@/views/Support')
   },
-
   {
     path: '/offerList',
     name: 'OfferList',
     component: () => import('@/views/OfferList')
+  },
+  {
+    path: '/balanceHistory',
+    name: 'BalanceHistory',
+    component: () => import('@/views/BalanceHistory'),
+    meta: {
+      title: 'balanceHistory'
+    }
   }
 ]
 

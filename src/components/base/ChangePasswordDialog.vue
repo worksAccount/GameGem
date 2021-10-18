@@ -8,6 +8,7 @@
     class="change-password-dialog"
     title="change password"
     width="95%"
+    top="20px"
   >
     <el-row class="dialog-body">
       <el-form

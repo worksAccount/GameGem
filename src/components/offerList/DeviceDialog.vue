@@ -1,10 +1,11 @@
 <template>
   <el-dialog
+    :visible.sync="visible"
     title="Mobile exclusive offers"
     :append-to-body="true"
     :modal-append-to-body="true"
-    :visible.sync="visible"
     width="90%"
+    top="20px"
   >
     <el-row class="content">
       <el-row class="description-container">

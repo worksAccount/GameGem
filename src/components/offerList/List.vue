@@ -26,14 +26,26 @@
               </div>
 
               <div class="button-container">
-                <el-button
-                  type="success"
-                  icon="el-icon-coin"
-                  round
-                  @click="addTask(item)"
-                >
-                  {{ item.goal }}
-                </el-button>
+                <template v-if="item.isInProcess">
+                  <span class="no-more" style="font-style: italic">
+                    In Process
+                  </span>
+                </template>
+                <template v-else-if="item.isComplete">
+                  <span class="no-more" style="font-style: italic">
+                    Completed
+                  </span>
+                </template>
+                <template v-else>
+                  <el-button
+                    type="success"
+                    icon="el-icon-coin"
+                    round
+                    @click="addTask(item)"
+                  >
+                    {{ item.goal }}
+                  </el-button>
+                </template>
               </div>
             </el-row>
           </el-card>
@@ -49,14 +61,25 @@
     <div v-if="!loading && noMore" class="no-more">
       -- no more data --
     </div>
+
+    <email-dialog ref="emailDialog" :item="currentItem" @updated="init" />
   </div>
 </template>
 
 <script>
-import { getList, addTask } from '@/api'
+import EmailDialog from '~components/base/EmailDialog'
+
+import {
+  getList,
+  // addTask,
+  getTask
+} from '@/api'
 
 export default {
   name: 'List',
+  components: {
+    EmailDialog
+  },
   data() {
     return {
       params: {
@@ -79,7 +102,11 @@ export default {
       total: 0,
       dataList: [],
       count: 10,
-      loading: false
+      loading: false,
+
+      listInProgress: [],
+      listCompleted: [],
+      currentItem: {}
     }
   },
   computed: {
@@ -138,31 +165,70 @@ export default {
             this.dataList = []
           }
         }
+
+        this.getTaskList() // 在任务列表中 设置 任务状态 未接受 or 进行中 or 已完成
+      })
+    },
+
+    getTaskList: function () {
+      const params = {
+        playerId: window.sessionStorage.getItem('GameGemUID')
+      }
+      getTask(params).then(res => {
+        if (res && res.code === 200) {
+          // status=1 未完成；status=2 已完成
+          // 修改为字段 taskStatus=1 未完成；taskStatus=2 已完成
+          const ls = res.result.records
+          this.listInProgress = ls.filter(item => {
+            return item.taskStatus === 1
+          })
+          this.listCompleted = ls.filter(item => {
+            return item.taskStatus === 2
+          })
+        } else {
+          this.listInProgress = []
+          this.listCompleted = []
+        }
+
+        this.dataList.map(item => {
+          this.listInProgress.forEach(inProcessItem => {
+            if (inProcessItem.offerId === item.id) item.isInProcess = true
+          })
+          this.listCompleted.forEach(completeItem => {
+            if (completeItem.offerId === item.id) item.isComplete = true
+          })
+        })
+
+        this.$forceUpdate()
       })
     },
 
     addTask: function (item) {
-      const params = {
-        offerId: item.id,
-        playerId: window.sessionStorage.getItem('GameGemUID')
-      }
-      addTask(params).then(res => {
-        if (res && res.code === 200) {
-          this.$notify({
-            title: '',
-            message: res.message,
-            type: 'success'
-          })
+      // show E-mail dialog
+      this.currentItem = item
+      this.$refs['emailDialog'].init()
 
-          this.doSearch()
-        } else {
-          this.$notify({
-            title: '',
-            message: res.message,
-            type: 'error'
-          })
-        }
-      })
+      // const params = {
+      //   offerId: item.id,
+      //   playerId: window.sessionStorage.getItem('GameGemUID')
+      // }
+      // addTask(params).then(res => {
+      //   if (res && res.code === 200) {
+      //     this.$notify({
+      //       title: '',
+      //       message: res.message,
+      //       type: 'success'
+      //     })
+      //
+      //     this.doSearch()
+      //   } else {
+      //     this.$notify({
+      //       title: '',
+      //       message: res.message,
+      //       type: 'error'
+      //     })
+      //   }
+      // })
     },
 
     goDetailPage: function (item) {

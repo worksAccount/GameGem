@@ -13,6 +13,8 @@
       <template v-if="u_name">
         <template v-if="$route.path !== '/userCenter'">
           <!-- @click="clickHandler(2)" -->
+          <span @click="goBalanceHistory">{{ u_balance }} pts</span>
+
           <span class="user-center" style="margin: 0 !important">
             <!--<i class="el-icon-user-solid" />-->
             <el-popover
@@ -60,7 +62,7 @@ export default {
   },
   mounted() {},
   computed: {
-    ...mapGetters(['device', 'u_id', 'u_name']),
+    ...mapGetters(['device', 'u_id', 'u_name', 'u_balance']),
 
     projectName() {
       return process.env.VUE_APP_PROJECT_NAME
@@ -108,6 +110,12 @@ export default {
           })
         }
       }
+    },
+
+    goBalanceHistory: function () {
+      this.$router.push({
+        path: '/balanceHistory'
+      })
     }
   }
 }

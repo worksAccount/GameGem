@@ -1,6 +1,7 @@
 const state = {
   uID: '',
-  uName: ''
+  uName: '',
+  uBalance: 0
 }
 
 const mutations = {
@@ -12,6 +13,10 @@ const mutations = {
     state.uName = value
     window.sessionStorage.setItem('GameGemUName', value)
   },
+  SET_BALANCE: function (state, value) {
+    state.uBalance = value
+    window.sessionStorage.setItem('GameGemUBalance', value)
+  },
   CLEAN_UID: function (state) {
     state.uID = ''
     window.sessionStorage.removeItem('GameGemUID')
@@ -19,6 +24,10 @@ const mutations = {
   CLEAN_UNAME: function (state) {
     state.uName = ''
     window.sessionStorage.removeItem('GameGemUName')
+  },
+  CLEAN_U_BALANCE: function (state) {
+    state.uBalance = ''
+    window.sessionStorage.removeItem('GameGemUBalance')
   }
 }
 
