@@ -287,8 +287,9 @@ export default {
     itemClickHandler: function (obj) {
       const item = obj.item
       const isInProgress = obj.isInProgress
+      const isReward = obj.isReward
       this.offerItem = item
-      this.$refs['detailDialog'].init(isInProgress)
+      this.$refs['detailDialog'].init(isInProgress, isReward)
     },
 
     goBalanceHistory: function () {

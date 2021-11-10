@@ -63,7 +63,7 @@
       </el-row>
     </el-dialog>
 
-    <email-dialog ref="emailDialog" :item="item" :is-resend="isResend" />
+    <email-dialog ref="emailDialog" :item="item" :is-resend="isResend" :is-reward="isReward" />
   </div>
 </template>
 
@@ -111,7 +111,7 @@ export default {
 
     addTask: function (item) {
       this.isResend = false
-      this.$refs['emailDialog'].init()
+      this.$refs['emailDialog'].init('Send E-mail')
 
       // const params = {
       //   offerId: item.id,

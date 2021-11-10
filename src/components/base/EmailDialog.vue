@@ -2,13 +2,23 @@
   <el-dialog
     :visible.sync="visible"
     class="detail-dialog"
-    title="Send E-mail"
+    :title="isReward ? 'Resend E-mail' : 'Send E-mail'"
     :append-to-body="true"
     :modal-append-to-body="true"
     width="50%"
     top="20px"
   >
     <el-row class="content">
+      <el-row class="description">
+        <p>
+          From the depths of obscurity to the peaks of legend, you will be the
+          author of your civilization`s history. Will you launch epic wars and
+          conquer the entire world? Or rise up as a virtuous leader renowned for
+          your sagacity? To get points play Rise of Kingdoms: must be done in
+          under 25 days from install.
+        </p>
+      </el-row>
+
       <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="E-MAIL" name="first">
           <el-form
@@ -26,7 +36,7 @@
 
           <div class="button-container">
             <el-button type="success" round v-loading="loading" @click="clickHandler">
-              Resend E-mail
+              {{ isReward ? 'Resend E-mail' : 'Send E-mail' }}
             </el-button>
           </div>
         </el-tab-pane>
@@ -49,6 +59,10 @@ export default {
       default: () => {}
     },
     isResend: {
+      type: Boolean,
+      default: () => false
+    },
+    isReward: {
       type: Boolean,
       default: () => false
     }
@@ -75,6 +89,7 @@ export default {
   },
   methods: {
     init: function () {
+      this.form.mail = sessionStorage.getItem('GameGemUName')
       this.visible = true
     },
     clickHandler: function () {
@@ -133,6 +148,16 @@ export default {
   .content {
     width: 100%;
     overflow: hidden;
+
+    .description {
+      margin-bottom: 10px;
+
+      p {
+        margin: 0;
+        font-weight: 400;
+        word-break: break-word;
+      }
+    }
 
     .button-container {
       margin: auto;

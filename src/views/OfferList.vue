@@ -6,7 +6,7 @@
 
     <list ref="offerList" @itemClick="itemClickHandler" />
 
-    <detail-dialog ref="detailDialog" :item="offerItem" />
+    <detail-dialog ref="detailDialog" :item="offerItem" :is-reward="isReward" />
   </el-row>
 </template>
 
@@ -26,7 +26,8 @@ export default {
   },
   data() {
     return {
-      offerItem: {}
+      offerItem: {},
+      isReward: false
     }
   },
   methods: {
@@ -42,6 +43,11 @@ export default {
 
     itemClickHandler: function (item) {
       this.offerItem = item
+      if (item.isInProcess) {
+        this.isReward = true
+      } else {
+        this.isReward = false
+      }
       this.$refs['detailDialog'].init()
     }
   }
