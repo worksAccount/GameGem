@@ -27,25 +27,27 @@
 
               <div class="button-container">
                 <template v-if="item.isInProcess">
-                  <span class="no-more" style="font-style: italic">
-                    In Process
-                  </span>
+                  <el-tag type="warning">
+                    <span class="no-more" style="font-style: italic">
+                      In Process
+                    </span>
+                  </el-tag>
                 </template>
                 <template v-else-if="item.isComplete">
-                  <span class="no-more" style="font-style: italic">
-                    Completed
-                  </span>
+                  <el-tag type="success">
+                    <span class="no-more" style="font-style: italic">
+                      Completed
+                    </span>
+                  </el-tag>
                 </template>
-                <template v-else>
-                  <el-button
-                    type="success"
-                    icon="el-icon-coin"
-                    round
-                    @click="addTask(item)"
-                  >
-                    {{ item.goal }}
-                  </el-button>
-                </template>
+                <el-button
+                  type="success"
+                  icon="el-icon-coin"
+                  round
+                  @click="addTask(item)"
+                >
+                  {{ item.goal }}
+                </el-button>
               </div>
             </el-row>
           </el-card>
@@ -206,7 +208,7 @@ export default {
     addTask: function (item) {
       // show E-mail dialog
       this.currentItem = item
-      this.$refs['emailDialog'].init()
+      this.$refs['emailDialog'].init('Send E-mail')
 
       // const params = {
       //   offerId: item.id,
@@ -281,9 +283,11 @@ export default {
         .button-container {
           width: 125px;
           padding: 10px;
+          text-align: center;
 
           button {
             width: 100%;
+            margin-top: 10px;
           }
         }
       }

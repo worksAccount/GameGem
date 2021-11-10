@@ -17,8 +17,16 @@
 
                   <el-row class="description-container">
                     <el-row class="description">{{ item.des }}</el-row>
+                    <!--
                     <el-row class="goal">Goal: {{ item.goal }}</el-row>
+                    -->
                   </el-row>
+                </div>
+
+                <div class="button-container">
+                  <el-button type="success" icon="el-icon-coin" round>
+                    {{ item.goal }}
+                  </el-button>
                 </div>
               </el-row>
             </el-card>
@@ -50,7 +58,8 @@ export default {
     goDetailPage: function (item) {
       this.$emit('itemClick', {
         item: item,
-        isInProgress: this.isInProgress
+        isInProgress: this.isInProgress,
+        isReward: true
       })
     }
   }
@@ -106,6 +115,17 @@ export default {
             .goal {
               width: 100px;
             }
+          }
+        }
+
+        .button-container {
+          width: 125px;
+          padding: 10px;
+          text-align: center;
+
+          button {
+            width: 100%;
+            margin-top: 10px;
           }
         }
       }

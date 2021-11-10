@@ -19,12 +19,25 @@
     <el-row class="container">
       <el-row class="content">
         <template v-if="list.length">
+          <!--
           <template v-for="(item, index) in list">
             <el-row>
               <el-col :span="2">{{ index }}</el-col>
               <el-col :span="20">{{ item }}</el-col>
             </el-row>
           </template>
+          -->
+          <el-table :data="list" stripe style="width: 100%">
+            <el-table-column prop="eventName" label="TYPE" />
+            <el-table-column prop="updateTime" label="DATE" />
+            <el-table-column prop="goal" label="POINTS">
+              <template slot-scope="scoped">
+                <i :class="scoped.row.type - 0 === 1 ? 'el-icon-plus' : 'el-icon-minus'" />
+                {{ scoped.row.goal }}
+              </template>
+            </el-table-column>
+            <el-table-column prop="balance" label="BALANCE" />
+          </el-table>
         </template>
         <template v-else>
           <div class="no-more">
@@ -62,7 +75,23 @@ export default {
           //   type: 'success'
           // })
           const ls = res?.result || []
-          this.list = ls
+          // this.list = ls
+          this.list = [
+            {
+              eventName: 'abc',
+              goal: 20,
+              type: 1, // 1.加；2.扣
+              balance: 300, // 变动后积分余额
+              updateTime: '2021-10-10 10:10:10'
+            },
+            {
+              eventName: 'abc',
+              goal: 20,
+              type: 2, // 1.加；2.扣
+              balance: 300, // 变动后积分余额
+              updateTime: '2021-10-10 10:10:10'
+            }
+          ]
         } else {
           this.$notify({
             title: '',

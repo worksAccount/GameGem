@@ -84,6 +84,7 @@ export default {
         mail: '',
         pwd: ''
         // mail: 'jinghongzhixian@126.com',
+        // mail: 'xushu_fighting@163.com',
         // pwd: '1225xushuA'
       },
       rules: {
