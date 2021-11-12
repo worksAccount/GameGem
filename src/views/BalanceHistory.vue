@@ -75,23 +75,23 @@ export default {
           //   type: 'success'
           // })
           const ls = res?.result || []
-          // this.list = ls
-          this.list = [
-            {
-              eventName: 'abc',
-              goal: 20,
-              type: 1, // 1.加；2.扣
-              balance: 300, // 变动后积分余额
-              updateTime: '2021-10-10 10:10:10'
-            },
-            {
-              eventName: 'abc',
-              goal: 20,
-              type: 2, // 1.加；2.扣
-              balance: 300, // 变动后积分余额
-              updateTime: '2021-10-10 10:10:10'
-            }
-          ]
+          this.list = ls
+          // this.list = [
+          //   {
+          //     eventName: 'abc',
+          //     goal: 20,
+          //     type: 1, // 1.加；2.扣
+          //     balance: 300, // 变动后积分余额
+          //     updateTime: '2021-10-10 10:10:10'
+          //   },
+          //   {
+          //     eventName: 'abc',
+          //     goal: 20,
+          //     type: 2, // 1.加；2.扣
+          //     balance: 300, // 变动后积分余额
+          //     updateTime: '2021-10-10 10:10:10'
+          //   }
+          // ]
         } else {
           this.$notify({
             title: '',
